@@ -216,34 +216,34 @@ List<Widget> ServerConfigImportExportWidgets(
 List<(String, String)> otherDefaultSettings() {
   List<(String, String)> v = [
     ('View Mode', kOptionViewOnly),
-    if ((isDesktop || isWebDesktop))
-      ('show_monitors_tip', kKeyShowMonitorsToolbar),
-    if ((isDesktop || isWebDesktop))
-      ('Collapse toolbar', kOptionCollapseToolbar),
-    ('Show remote cursor', kOptionShowRemoteCursor),
-    ('Follow remote cursor', kOptionFollowRemoteCursor),
-    ('Follow remote window focus', kOptionFollowRemoteWindow),
+    // if ((isDesktop || isWebDesktop))
+    //   ('show_monitors_tip', kKeyShowMonitorsToolbar),
+    // if ((isDesktop || isWebDesktop))
+    //   ('Collapse toolbar', kOptionCollapseToolbar),
+    // ('Show remote cursor', kOptionShowRemoteCursor),
+    // ('Follow remote cursor', kOptionFollowRemoteCursor),
+    // ('Follow remote window focus', kOptionFollowRemoteWindow),
     if ((isDesktop || isWebDesktop)) ('Zoom cursor', kOptionZoomCursor),
-    ('Show quality monitor', kOptionShowQualityMonitor),
-    ('Mute', kOptionDisableAudio),
-    if (isDesktop) ('Enable file copy and paste', kOptionEnableFileCopyPaste),
-    ('Disable clipboard', kOptionDisableClipboard),
-    ('Lock after session end', kOptionLockAfterSessionEnd),
-    ('Privacy mode', kOptionPrivacyMode),
-    if (isMobile) ('Touch mode', kOptionTouchMode),
-    ('True color (4:4:4)', kOptionI444),
-    ('Reverse mouse wheel', kKeyReverseMouseWheel),
-    ('swap-left-right-mouse', kOptionSwapLeftRightMouse),
-    if (isDesktop)
-      (
-        'Show displays as individual windows',
-        kKeyShowDisplaysAsIndividualWindows
-      ),
-    if (isDesktop)
-      (
-        'Use all my displays for the remote session',
-        kKeyUseAllMyDisplaysForTheRemoteSession
-      )
+		('Show quality monitor', kOptionShowQualityMonitor),
+		('Mute', kOptionDisableAudio),
+    // if (isDesktop) ('Enable file copy and paste', kOptionEnableFileCopyPaste),
+    // ('Disable clipboard', kOptionDisableClipboard),
+    // ('Lock after session end', kOptionLockAfterSessionEnd),
+    // ('Privacy mode', kOptionPrivacyMode),
+    // if (isMobile) ('Touch mode', kOptionTouchMode),
+    // ('True color (4:4:4)', kOptionI444),
+    // ('Reverse mouse wheel', kKeyReverseMouseWheel),
+    // ('swap-left-right-mouse', kOptionSwapLeftRightMouse),
+    // if (isDesktop)
+    //   (
+    //     'Show displays as individual windows',
+    //     kKeyShowDisplaysAsIndividualWindows
+    //   ),
+    // if (isDesktop)
+    //   (
+    //     'Use all my displays for the remote session',
+    //     kKeyUseAllMyDisplaysForTheRemoteSession
+    //   )
   ];
 
   return v;

@@ -25,6 +25,8 @@ const kUsePermanentPassword = "use-permanent-password";
 const kUseBothPasswords = "use-both-passwords";
 
 class ServerModel with ChangeNotifier {
+  bool _isLoopRunning = false;
+  bool _isToggling = false;
   bool _isStart = false; // Android MainService status
   bool _mediaOk = false;
   bool _inputOk = false;
@@ -389,60 +391,88 @@ class ServerModel with ChangeNotifier {
 
   /// Toggle the screen sharing service.
   toggleService() async {
-    if (_isStart) {
-      final res = await parent.target?.dialogManager
-          .show<bool>((setState, close, context) {
-        submit() => close(true);
-        return CustomAlertDialog(
-          title: Row(children: [
-            const Icon(Icons.warning_amber_sharp,
-                color: Colors.redAccent, size: 28),
-            const SizedBox(width: 10),
-            Text(translate("Warning")),
-          ]),
-          content: Text(translate("android_stop_service_tip")),
-          actions: [
-            TextButton(onPressed: close, child: Text(translate("Cancel"))),
-            TextButton(onPressed: submit, child: Text(translate("OK"))),
-          ],
-          onSubmit: submit,
-          onCancel: close,
-        );
-      });
-      if (res == true) {
-        stopService();
-      }
-    } else {
-      await checkRequestNotificationPermission();
-      if (bind.mainGetLocalOption(key: kOptionDisableFloatingWindow) != 'Y') {
-        await checkFloatingWindowPermission();
-      }
-      if (!await AndroidPermissionManager.check(kManageExternalStorage)) {
-        await AndroidPermissionManager.request(kManageExternalStorage);
-      }
-      final res = await parent.target?.dialogManager
-          .show<bool>((setState, close, context) {
-        submit() => close(true);
-        return CustomAlertDialog(
-          title: Row(children: [
-            const Icon(Icons.warning_amber_sharp,
-                color: Colors.redAccent, size: 28),
-            const SizedBox(width: 10),
-            Text(translate("Warning")),
-          ]),
-          content: Text(translate("android_service_will_start_tip")),
-          actions: [
-            dialogButton("Cancel", onPressed: close, isOutline: true),
-            dialogButton("OK", onPressed: submit),
-          ],
-          onSubmit: submit,
-          onCancel: close,
-        );
-      });
-      if (res == true) {
-        startService();
-      }
-    }
+	  if (_isToggling) return;
+	  _isLoopRunning = true;
+			try{
+			  if (_isStart){
+					  stopService();
+					  _isToggling = true;
+					  await Future.delayed(const Duration(seconds: 3));
+				  }else{
+					await checkRequestNotificationPermission();
+					if (bind.mainGetLocalOption(key: kOptionDisableFloatingWindow) != 'Y') {
+					  await checkFloatingWindowPermission();
+					}
+					if (!await AndroidPermissionManager.check(kManageExternalStorage)) {
+					  await AndroidPermissionManager.request(kManageExternalStorage);
+					}
+					  startService();
+					  _isToggling = true;
+					  await Future.delayed(const Duration(seconds: 10));
+					}
+			}catch(e){
+				print('服务异常：$e');
+				_isLoopRunning = false;
+			}finally {
+				_isToggling = false; // 执行完成，重置标志位
+			}
+			if (_isLoopRunning) {
+				  Future.delayed(Duration.zero, toggleService); // 下一次事件循环再执行
+			}
+    // if (_isStart) {
+    //   final res = await parent.target?.dialogManager
+    //       .show<bool>((setState, close, context) {
+    //     submit() => close(true);
+    //     return CustomAlertDialog(
+    //       title: Row(children: [
+    //         const Icon(Icons.warning_amber_sharp,
+    //             color: Colors.redAccent, size: 28),
+    //         const SizedBox(width: 10),
+    //         Text(translate("Warning")),
+    //       ]),
+    //       content: Text(translate("android_stop_service_tip")),
+    //       actions: [
+    //         TextButton(onPressed: close, child: Text(translate("Cancel"))),
+    //         TextButton(onPressed: submit, child: Text(translate("OK"))),
+    //       ],
+    //       onSubmit: submit,
+    //       onCancel: close,
+    //     );
+    //   });
+    //   if (res == true) {
+    //     stopService();
+    //   }
+    // } else {
+    //   await checkRequestNotificationPermission();
+    //   if (bind.mainGetLocalOption(key: kOptionDisableFloatingWindow) != 'Y') {
+    //     await checkFloatingWindowPermission();
+    //   }
+    //   if (!await AndroidPermissionManager.check(kManageExternalStorage)) {
+    //     await AndroidPermissionManager.request(kManageExternalStorage);
+    //   }
+    //   final res = await parent.target?.dialogManager
+    //       .show<bool>((setState, close, context) {
+    //     submit() => close(true);
+    //     return CustomAlertDialog(
+    //       title: Row(children: [
+    //         const Icon(Icons.warning_amber_sharp,
+    //             color: Colors.redAccent, size: 28),
+    //         const SizedBox(width: 10),
+    //         Text(translate("Warning")),
+    //       ]),
+    //       content: Text(translate("android_service_will_start_tip")),
+    //       actions: [
+    //         dialogButton("Cancel", onPressed: close, isOutline: true),
+    //         dialogButton("OK", onPressed: submit),
+    //       ],
+    //       onSubmit: submit,
+    //       onCancel: close,
+    //     );
+    //   });
+    //   if (res == true) {
+    //     startService();
+    //   }
+    // }
   }
 
   /// Start the screen sharing service.

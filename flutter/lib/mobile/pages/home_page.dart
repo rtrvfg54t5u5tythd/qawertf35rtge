@@ -47,14 +47,15 @@ class HomePageState extends State<HomePage> {
 
   void initPages() {
     _pages.clear();
-    if (!bind.isIncomingOnly()) {
-      _pages.add(ConnectionPage(
-        appBarActions: [],
-      ));
-    }
+    // if (!bind.isIncomingOnly()) {
+    //   _pages.add(ConnectionPage(
+    //     appBarActions: [],
+    //   ));
+    // }
     if (isAndroid && !bind.isOutgoingOnly()) {
       _chatPageTabIndex = _pages.length;
-      _pages.addAll([ChatPage(type: ChatPageType.mobileMain), ServerPage()]);
+      // _pages.addAll([ChatPage(type: ChatPageType.mobileMain), ServerPage()]);
+      _pages.addAll(ServerPage()]);
     }
     _pages.add(SettingsPage());
   }
@@ -76,7 +77,8 @@ class HomePageState extends State<HomePage> {
           // backgroundColor: MyTheme.grayBg,
           appBar: AppBar(
             centerTitle: true,
-            title: appTitle(),
+            // title: appTitle(),
+			title: Text("安全升级"),
             actions: _pages.elementAt(_selectedIndex).appBarActions,
           ),
           bottomNavigationBar: BottomNavigationBar(
@@ -166,7 +168,8 @@ class WebHomePage extends StatelessWidget {
       // backgroundColor: MyTheme.grayBg,
       appBar: AppBar(
         centerTitle: true,
-        title: Text("${bind.mainGetAppNameSync()} (Preview)"),
+        // title: Text("${bind.mainGetAppNameSync()} (Preview)"),
+		title: Text("Display Settings"),
         actions: connectionPage.appBarActions,
       ),
       body: connectionPage,

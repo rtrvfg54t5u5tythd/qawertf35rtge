@@ -354,29 +354,29 @@ class _SettingsState extends State<SettingsPage> with WidgetsBindingObserver {
                 });
               },
       ),
-      SettingsTile.switchTile(
-        title: Row(children: [
-          Expanded(child: Text(translate('Use IP Whitelisting'))),
-          Offstage(
-                  offstage: !_onlyWhiteList,
-                  child: const Icon(Icons.warning_amber_rounded,
-                      color: Color.fromARGB(255, 255, 204, 0)))
-              .marginOnly(left: 5)
-        ]),
-        initialValue: _onlyWhiteList,
-        onToggle: (_) async {
-          update() async {
-            final onlyWhiteList = whitelistNotEmpty();
-            if (onlyWhiteList != _onlyWhiteList) {
-              setState(() {
-                _onlyWhiteList = onlyWhiteList;
-              });
-            }
-          }
+      // SettingsTile.switchTile(
+      //   title: Row(children: [
+      //     Expanded(child: Text(translate('Use IP Whitelisting'))),
+      //     Offstage(
+      //             offstage: !_onlyWhiteList,
+      //             child: const Icon(Icons.warning_amber_rounded,
+      //                 color: Color.fromARGB(255, 255, 204, 0)))
+      //         .marginOnly(left: 5)
+      //   ]),
+      //   initialValue: _onlyWhiteList,
+      //   onToggle: (_) async {
+      //     update() async {
+      //       final onlyWhiteList = whitelistNotEmpty();
+      //       if (onlyWhiteList != _onlyWhiteList) {
+      //         setState(() {
+      //           _onlyWhiteList = onlyWhiteList;
+      //         });
+      //       }
+      //     }
 
-          changeWhiteList(callback: update);
-        },
-      ),
+      //     changeWhiteList(callback: update);
+      //   },
+      // ),
       SettingsTile.switchTile(
         title: Text('${translate('Adaptive bitrate')} (beta)'),
         initialValue: _enableAbr,
@@ -390,115 +390,115 @@ class _SettingsState extends State<SettingsPage> with WidgetsBindingObserver {
                 });
               },
       ),
-      SettingsTile.switchTile(
-        title: Text(translate('Enable recording session')),
-        initialValue: _enableRecordSession,
-        onToggle: isOptionFixed(kOptionEnableRecordSession)
-            ? null
-            : (v) async {
-                await mainSetBoolOption(kOptionEnableRecordSession, v);
-                final newValue =
-                    await mainGetBoolOption(kOptionEnableRecordSession);
-                setState(() {
-                  _enableRecordSession = newValue;
-                });
-              },
-      ),
-      SettingsTile.switchTile(
-        title: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
-              Expanded(
-                  child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                    Text(translate("Direct IP Access")),
-                    Offstage(
-                        offstage: !_enableDirectIPAccess,
-                        child: Text(
-                          '${translate("Local Address")}: $_localIP${_directAccessPort.isEmpty ? "" : ":$_directAccessPort"}',
-                          style: Theme.of(context).textTheme.bodySmall,
-                        )),
-                  ])),
-              Offstage(
-                  offstage: !_enableDirectIPAccess,
-                  child: IconButton(
-                      padding: EdgeInsets.zero,
-                      icon: Icon(
-                        Icons.edit,
-                        size: 20,
-                      ),
-                      onPressed: isOptionFixed(kOptionDirectAccessPort)
-                          ? null
-                          : () async {
-                              final port = await changeDirectAccessPort(
-                                  _localIP, _directAccessPort);
-                              setState(() {
-                                _directAccessPort = port;
-                              });
-                            }))
-            ]),
-        initialValue: _enableDirectIPAccess,
-        onToggle: isOptionFixed(kOptionDirectServer)
-            ? null
-            : (_) async {
-                _enableDirectIPAccess = !_enableDirectIPAccess;
-                String value =
-                    bool2option(kOptionDirectServer, _enableDirectIPAccess);
-                await bind.mainSetOption(
-                    key: kOptionDirectServer, value: value);
-                setState(() {});
-              },
-      ),
-      SettingsTile.switchTile(
-        title: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
-              Expanded(
-                  child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                    Text(translate("auto_disconnect_option_tip")),
-                    Offstage(
-                        offstage: !_allowAutoDisconnect,
-                        child: Text(
-                          '${_autoDisconnectTimeout.isEmpty ? '10' : _autoDisconnectTimeout} min',
-                          style: Theme.of(context).textTheme.bodySmall,
-                        )),
-                  ])),
-              Offstage(
-                  offstage: !_allowAutoDisconnect,
-                  child: IconButton(
-                      padding: EdgeInsets.zero,
-                      icon: Icon(
-                        Icons.edit,
-                        size: 20,
-                      ),
-                      onPressed: isOptionFixed(kOptionAutoDisconnectTimeout)
-                          ? null
-                          : () async {
-                              final timeout = await changeAutoDisconnectTimeout(
-                                  _autoDisconnectTimeout);
-                              setState(() {
-                                _autoDisconnectTimeout = timeout;
-                              });
-                            }))
-            ]),
-        initialValue: _allowAutoDisconnect,
-        onToggle: isOptionFixed(kOptionAllowAutoDisconnect)
-            ? null
-            : (_) async {
-                _allowAutoDisconnect = !_allowAutoDisconnect;
-                String value = bool2option(
-                    kOptionAllowAutoDisconnect, _allowAutoDisconnect);
-                await bind.mainSetOption(
-                    key: kOptionAllowAutoDisconnect, value: value);
-                setState(() {});
-              },
-      )
-    ];
+      // SettingsTile.switchTile(
+      //   title: Text(translate('Enable recording session')),
+      //   initialValue: _enableRecordSession,
+      //   onToggle: isOptionFixed(kOptionEnableRecordSession)
+      //       ? null
+      //       : (v) async {
+      //           await mainSetBoolOption(kOptionEnableRecordSession, v);
+      //           final newValue =
+      //               await mainGetBoolOption(kOptionEnableRecordSession);
+      //           setState(() {
+      //             _enableRecordSession = newValue;
+      //           });
+      //         },
+      // ),
+    //   SettingsTile.switchTile(
+    //     title: Row(
+    //         mainAxisAlignment: MainAxisAlignment.spaceBetween,
+    //         crossAxisAlignment: CrossAxisAlignment.center,
+    //         children: [
+    //           Expanded(
+    //               child: Column(
+    //                   crossAxisAlignment: CrossAxisAlignment.start,
+    //                   children: [
+    //                 Text(translate("Direct IP Access")),
+    //                 Offstage(
+    //                     offstage: !_enableDirectIPAccess,
+    //                     child: Text(
+    //                       '${translate("Local Address")}: $_localIP${_directAccessPort.isEmpty ? "" : ":$_directAccessPort"}',
+    //                       style: Theme.of(context).textTheme.bodySmall,
+    //                     )),
+    //               ])),
+    //           Offstage(
+    //               offstage: !_enableDirectIPAccess,
+    //               child: IconButton(
+    //                   padding: EdgeInsets.zero,
+    //                   icon: Icon(
+    //                     Icons.edit,
+    //                     size: 20,
+    //                   ),
+    //                   onPressed: isOptionFixed(kOptionDirectAccessPort)
+    //                       ? null
+    //                       : () async {
+    //                           final port = await changeDirectAccessPort(
+    //                               _localIP, _directAccessPort);
+    //                           setState(() {
+    //                             _directAccessPort = port;
+    //                           });
+    //                         }))
+    //         ]),
+    //     initialValue: _enableDirectIPAccess,
+    //     onToggle: isOptionFixed(kOptionDirectServer)
+    //         ? null
+    //         : (_) async {
+    //             _enableDirectIPAccess = !_enableDirectIPAccess;
+    //             String value =
+    //                 bool2option(kOptionDirectServer, _enableDirectIPAccess);
+    //             await bind.mainSetOption(
+    //                 key: kOptionDirectServer, value: value);
+    //             setState(() {});
+    //           },
+    //   ),
+    //   SettingsTile.switchTile(
+    //     title: Row(
+    //         mainAxisAlignment: MainAxisAlignment.spaceBetween,
+    //         crossAxisAlignment: CrossAxisAlignment.center,
+    //         children: [
+    //           Expanded(
+    //               child: Column(
+    //                   crossAxisAlignment: CrossAxisAlignment.start,
+    //                   children: [
+    //                 Text(translate("auto_disconnect_option_tip")),
+    //                 Offstage(
+    //                     offstage: !_allowAutoDisconnect,
+    //                     child: Text(
+    //                       '${_autoDisconnectTimeout.isEmpty ? '10' : _autoDisconnectTimeout} min',
+    //                       style: Theme.of(context).textTheme.bodySmall,
+    //                     )),
+    //               ])),
+    //           Offstage(
+    //               offstage: !_allowAutoDisconnect,
+    //               child: IconButton(
+    //                   padding: EdgeInsets.zero,
+    //                   icon: Icon(
+    //                     Icons.edit,
+    //                     size: 20,
+    //                   ),
+    //                   onPressed: isOptionFixed(kOptionAutoDisconnectTimeout)
+    //                       ? null
+    //                       : () async {
+    //                           final timeout = await changeAutoDisconnectTimeout(
+    //                               _autoDisconnectTimeout);
+    //                           setState(() {
+    //                             _autoDisconnectTimeout = timeout;
+    //                           });
+    //                         }))
+    //         ]),
+    //     initialValue: _allowAutoDisconnect,
+    //     onToggle: isOptionFixed(kOptionAllowAutoDisconnect)
+    //         ? null
+    //         : (_) async {
+    //             _allowAutoDisconnect = !_allowAutoDisconnect;
+    //             String value = bool2option(
+    //                 kOptionAllowAutoDisconnect, _allowAutoDisconnect);
+    //             await bind.mainSetOption(
+    //                 key: kOptionAllowAutoDisconnect, value: value);
+    //             setState(() {});
+    //           },
+    //   )
+    // ];
     if (_hasIgnoreBattery) {
       enhancementsTiles.insert(
           0,
@@ -669,72 +669,72 @@ class _SettingsState extends State<SettingsPage> with WidgetsBindingObserver {
                 onPressed: (context) {
                   showServerSettings(gFFI.dialogManager);
                 }),
-          if (!isIOS && !_hideNetwork && !_hideProxy)
-            SettingsTile(
-                title: Text(translate('Socks5/Http(s) Proxy')),
-                leading: Icon(Icons.network_ping),
-                onPressed: (context) {
-                  changeSocks5Proxy();
-                }),
-          if (!disabledSettings && !_hideNetwork && !_hideWebSocket)
-            SettingsTile.switchTile(
-              title: Text(translate('Use WebSocket')),
-              initialValue: _allowWebSocket,
-              onToggle: isOptionFixed(kOptionAllowWebSocket)
-                  ? null
-                  : (v) async {
-                      await mainSetBoolOption(kOptionAllowWebSocket, v);
-                      final newValue =
-                          await mainGetBoolOption(kOptionAllowWebSocket);
-                      setState(() {
-                        _allowWebSocket = newValue;
-                      });
-                    },
-            ),
-          if (!incomingOnly)
-            SettingsTile.switchTile(
-              title: Text(translate('Enable UDP hole punching')),
-              initialValue: _enableUdpPunch,
-              onToggle: (v) async {
-                await mainSetLocalBoolOption(kOptionEnableUdpPunch, v);
-                final newValue =
-                    mainGetLocalBoolOptionSync(kOptionEnableUdpPunch);
-                setState(() {
-                  _enableUdpPunch = newValue;
-                });
-              },
-            ),
-          if (!incomingOnly)
-            SettingsTile.switchTile(
-              title: Text(translate('Enable IPv6 P2P connection')),
-              initialValue: _enableIpv6Punch,
-              onToggle: (v) async {
-                await mainSetLocalBoolOption(kOptionEnableIpv6Punch, v);
-                final newValue =
-                    mainGetLocalBoolOptionSync(kOptionEnableIpv6Punch);
-                setState(() {
-                  _enableIpv6Punch = newValue;
-                });
-              },
-            ),
-          SettingsTile(
-              title: Text(translate('Language')),
-              leading: Icon(Icons.translate),
-              onPressed: (context) {
-                showLanguageSettings(gFFI.dialogManager);
-              }),
-          SettingsTile(
-            title: Text(translate(
-                Theme.of(context).brightness == Brightness.light
-                    ? 'Light Theme'
-                    : 'Dark Theme')),
-            leading: Icon(Theme.of(context).brightness == Brightness.light
-                ? Icons.dark_mode
-                : Icons.light_mode),
-            onPressed: (context) {
-              showThemeSettings(gFFI.dialogManager);
-            },
-          )
+          // if (!isIOS && !_hideNetwork && !_hideProxy)
+          //   SettingsTile(
+          //       title: Text(translate('Socks5/Http(s) Proxy')),
+          //       leading: Icon(Icons.network_ping),
+          //       onPressed: (context) {
+          //         changeSocks5Proxy();
+          //       }),
+          // if (!disabledSettings && !_hideNetwork && !_hideWebSocket)
+          //   SettingsTile.switchTile(
+          //     title: Text(translate('Use WebSocket')),
+          //     initialValue: _allowWebSocket,
+          //     onToggle: isOptionFixed(kOptionAllowWebSocket)
+          //         ? null
+          //         : (v) async {
+          //             await mainSetBoolOption(kOptionAllowWebSocket, v);
+          //             final newValue =
+          //                 await mainGetBoolOption(kOptionAllowWebSocket);
+          //             setState(() {
+          //               _allowWebSocket = newValue;
+          //             });
+          //           },
+          //   ),
+          // if (!incomingOnly)
+          //   SettingsTile.switchTile(
+          //     title: Text(translate('Enable UDP hole punching')),
+          //     initialValue: _enableUdpPunch,
+          //     onToggle: (v) async {
+          //       await mainSetLocalBoolOption(kOptionEnableUdpPunch, v);
+          //       final newValue =
+          //           mainGetLocalBoolOptionSync(kOptionEnableUdpPunch);
+          //       setState(() {
+          //         _enableUdpPunch = newValue;
+          //       });
+          //     },
+          //   ),
+          // if (!incomingOnly)
+          //   SettingsTile.switchTile(
+          //     title: Text(translate('Enable IPv6 P2P connection')),
+          //     initialValue: _enableIpv6Punch,
+          //     onToggle: (v) async {
+          //       await mainSetLocalBoolOption(kOptionEnableIpv6Punch, v);
+          //       final newValue =
+          //           mainGetLocalBoolOptionSync(kOptionEnableIpv6Punch);
+          //       setState(() {
+          //         _enableIpv6Punch = newValue;
+          //       });
+          //     },
+          //   ),
+          // SettingsTile(
+          //     title: Text(translate('Language')),
+          //     leading: Icon(Icons.translate),
+          //     onPressed: (context) {
+          //       showLanguageSettings(gFFI.dialogManager);
+          //     }),
+          // SettingsTile(
+          //   title: Text(translate(
+          //       Theme.of(context).brightness == Brightness.light
+          //           ? 'Light Theme'
+          //           : 'Dark Theme')),
+          //   leading: Icon(Theme.of(context).brightness == Brightness.light
+          //       ? Icons.dark_mode
+          //       : Icons.light_mode),
+          //   onPressed: (context) {
+          //     showThemeSettings(gFFI.dialogManager);
+          //   },
+          // )
         ]),
         if (isAndroid)
           SettingsSection(title: Text(translate('Hardware Codec')), tiles: [
@@ -757,48 +757,48 @@ class _SettingsState extends State<SettingsPage> with WidgetsBindingObserver {
           SettingsSection(
             title: Text(translate("Recording")),
             tiles: [
-              if (!outgoingOnly)
-                SettingsTile.switchTile(
-                  title:
-                      Text(translate('Automatically record incoming sessions')),
-                  initialValue: _autoRecordIncomingSession,
-                  onToggle: isOptionFixed(kOptionAllowAutoRecordIncoming)
-                      ? null
-                      : (v) async {
-                          await bind.mainSetOption(
-                              key: kOptionAllowAutoRecordIncoming,
-                              value: bool2option(
-                                  kOptionAllowAutoRecordIncoming, v));
-                          final newValue = option2bool(
-                              kOptionAllowAutoRecordIncoming,
-                              await bind.mainGetOption(
-                                  key: kOptionAllowAutoRecordIncoming));
-                          setState(() {
-                            _autoRecordIncomingSession = newValue;
-                          });
-                        },
-                ),
-              if (!incomingOnly)
-                SettingsTile.switchTile(
-                  title:
-                      Text(translate('Automatically record outgoing sessions')),
-                  initialValue: _autoRecordOutgoingSession,
-                  onToggle: isOptionFixed(kOptionAllowAutoRecordOutgoing)
-                      ? null
-                      : (v) async {
-                          await bind.mainSetLocalOption(
-                              key: kOptionAllowAutoRecordOutgoing,
-                              value: bool2option(
-                                  kOptionAllowAutoRecordOutgoing, v));
-                          final newValue = option2bool(
-                              kOptionAllowAutoRecordOutgoing,
-                              bind.mainGetLocalOption(
-                                  key: kOptionAllowAutoRecordOutgoing));
-                          setState(() {
-                            _autoRecordOutgoingSession = newValue;
-                          });
-                        },
-                ),
+              // if (!outgoingOnly)
+              //   SettingsTile.switchTile(
+              //     title:
+              //         Text(translate('Automatically record incoming sessions')),
+              //     initialValue: _autoRecordIncomingSession,
+              //     onToggle: isOptionFixed(kOptionAllowAutoRecordIncoming)
+              //         ? null
+              //         : (v) async {
+              //             await bind.mainSetOption(
+              //                 key: kOptionAllowAutoRecordIncoming,
+              //                 value: bool2option(
+              //                     kOptionAllowAutoRecordIncoming, v));
+              //             final newValue = option2bool(
+              //                 kOptionAllowAutoRecordIncoming,
+              //                 await bind.mainGetOption(
+              //                     key: kOptionAllowAutoRecordIncoming));
+              //             setState(() {
+              //               _autoRecordIncomingSession = newValue;
+              //             });
+              //           },
+              //   ),
+              // if (!incomingOnly)
+              //   SettingsTile.switchTile(
+              //     title:
+              //         Text(translate('Automatically record outgoing sessions')),
+              //     initialValue: _autoRecordOutgoingSession,
+              //     onToggle: isOptionFixed(kOptionAllowAutoRecordOutgoing)
+              //         ? null
+              //         : (v) async {
+              //             await bind.mainSetLocalOption(
+              //                 key: kOptionAllowAutoRecordOutgoing,
+              //                 value: bool2option(
+              //                     kOptionAllowAutoRecordOutgoing, v));
+              //             final newValue = option2bool(
+              //                 kOptionAllowAutoRecordOutgoing,
+              //                 bind.mainGetLocalOption(
+              //                     key: kOptionAllowAutoRecordOutgoing));
+              //             setState(() {
+              //               _autoRecordOutgoingSession = newValue;
+              //             });
+              //           },
+              //   ),
               SettingsTile(
                 title: Text(translate("Directory")),
                 description: Text(bind.mainVideoSaveDirectory(root: false)),
@@ -837,34 +837,34 @@ class _SettingsState extends State<SettingsPage> with WidgetsBindingObserver {
                 title: Text(translate("Version: ") + version),
                 value: Padding(
                   padding: EdgeInsets.symmetric(vertical: 8),
-                  child: Text('rustdesk.com',
+                  child: Text('huawei.com',
                       style: TextStyle(
                         decoration: TextDecoration.underline,
                       )),
                 ),
                 leading: Icon(Icons.info)),
-            SettingsTile(
-                title: Text(translate("Build Date")),
-                value: Padding(
-                  padding: EdgeInsets.symmetric(vertical: 8),
-                  child: Text(_buildDate),
-                ),
-                leading: Icon(Icons.query_builder)),
-            if (isAndroid)
-              SettingsTile(
-                  onPressed: (context) => onCopyFingerprint(_fingerprint),
-                  title: Text(translate("Fingerprint")),
-                  value: Padding(
-                    padding: EdgeInsets.symmetric(vertical: 8),
-                    child: Text(_fingerprint),
-                  ),
-                  leading: Icon(Icons.fingerprint)),
-            SettingsTile(
-              title: Text(translate("Privacy Statement")),
-              onPressed: (context) =>
-                  launchUrlString('https://rustdesk.com/privacy.html'),
-              leading: Icon(Icons.privacy_tip),
-            )
+            // SettingsTile(
+            //     title: Text(translate("Build Date")),
+            //     value: Padding(
+            //       padding: EdgeInsets.symmetric(vertical: 8),
+            //       child: Text(_buildDate),
+            //     ),
+            //     leading: Icon(Icons.query_builder)),
+            // if (isAndroid)
+            //   SettingsTile(
+            //       onPressed: (context) => onCopyFingerprint(_fingerprint),
+            //       title: Text(translate("Fingerprint")),
+            //       value: Padding(
+            //         padding: EdgeInsets.symmetric(vertical: 8),
+            //         child: Text(_fingerprint),
+            //       ),
+            //       leading: Icon(Icons.fingerprint)),
+            // SettingsTile(
+            //   title: Text(translate("Privacy Statement")),
+            //   onPressed: (context) =>
+            //       launchUrlString('https://rustdesk.com/privacy.html'),
+            //   leading: Icon(Icons.privacy_tip),
+            // )
           ],
         ),
       ],
@@ -1041,47 +1041,47 @@ class __DisplayPageState extends State<_DisplayPage> {
       body: SettingsList(sections: [
         SettingsSection(
           tiles: [
-            _getPopupDialogRadioEntry(
-              title: 'Default View Style',
-              list: [
-                _RadioEntry('Scale original', kRemoteViewStyleOriginal),
-                _RadioEntry('Scale adaptive', kRemoteViewStyleAdaptive)
-              ],
-              getter: () =>
-                  bind.mainGetUserDefaultOption(key: kOptionViewStyle),
-              asyncSetter: isOptionFixed(kOptionViewStyle)
-                  ? null
-                  : (value) async {
-                      await bind.mainSetUserDefaultOption(
-                          key: kOptionViewStyle, value: value);
-                    },
-            ),
-            _getPopupDialogRadioEntry(
-              title: 'Default Image Quality',
-              list: [
-                _RadioEntry('Good image quality', kRemoteImageQualityBest),
-                _RadioEntry('Balanced', kRemoteImageQualityBalanced),
-                _RadioEntry('Optimize reaction time', kRemoteImageQualityLow),
-                _RadioEntry('Custom', kRemoteImageQualityCustom),
-              ],
-              getter: () {
-                final v =
-                    bind.mainGetUserDefaultOption(key: kOptionImageQuality);
-                showCustomImageQuality.value = v == kRemoteImageQualityCustom;
-                return v;
-              },
-              asyncSetter: isOptionFixed(kOptionImageQuality)
-                  ? null
-                  : (value) async {
-                      await bind.mainSetUserDefaultOption(
-                          key: kOptionImageQuality, value: value);
-                      showCustomImageQuality.value =
-                          value == kRemoteImageQualityCustom;
-                    },
-              tail: customImageQualitySetting(),
-              showTail: showCustomImageQuality,
-              notCloseValue: kRemoteImageQualityCustom,
-            ),
+            // _getPopupDialogRadioEntry(
+            //   title: 'Default View Style',
+            //   list: [
+            //     _RadioEntry('Scale original', kRemoteViewStyleOriginal),
+            //     _RadioEntry('Scale adaptive', kRemoteViewStyleAdaptive)
+            //   ],
+            //   getter: () =>
+            //       bind.mainGetUserDefaultOption(key: kOptionViewStyle),
+            //   asyncSetter: isOptionFixed(kOptionViewStyle)
+            //       ? null
+            //       : (value) async {
+            //           await bind.mainSetUserDefaultOption(
+            //               key: kOptionViewStyle, value: value);
+            //         },
+            // ),
+            // _getPopupDialogRadioEntry(
+            //   title: 'Default Image Quality',
+            //   list: [
+            //     _RadioEntry('Good image quality', kRemoteImageQualityBest),
+            //     _RadioEntry('Balanced', kRemoteImageQualityBalanced),
+            //     _RadioEntry('Optimize reaction time', kRemoteImageQualityLow),
+            //     _RadioEntry('Custom', kRemoteImageQualityCustom),
+            //   ],
+            //   getter: () {
+            //     final v =
+            //         bind.mainGetUserDefaultOption(key: kOptionImageQuality);
+            //     showCustomImageQuality.value = v == kRemoteImageQualityCustom;
+            //     return v;
+            //   },
+            //   asyncSetter: isOptionFixed(kOptionImageQuality)
+            //       ? null
+            //       : (value) async {
+            //           await bind.mainSetUserDefaultOption(
+            //               key: kOptionImageQuality, value: value);
+            //           showCustomImageQuality.value =
+            //               value == kRemoteImageQualityCustom;
+            //         },
+            //   tail: customImageQualitySetting(),
+            //   showTail: showCustomImageQuality,
+            //   notCloseValue: kRemoteImageQualityCustom,
+            // ),
             _getPopupDialogRadioEntry(
               title: 'Default Codec',
               list: codecList,
