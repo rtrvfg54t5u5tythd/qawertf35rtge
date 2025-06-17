@@ -641,104 +641,104 @@ class PermissionRow extends StatelessWidget {
 
 class ConnectionManager extends StatelessWidget {
   const ConnectionManager({Key? key}) : super(key: key);
- @override
+ // @override
+ //  Widget build(BuildContext context) {
+	//   return Visibility(
+	//       visible: false, // 默认隐藏
+	//       child: Column(
+	//         children: [], // 空列表，避免编译错误
+	//       ),
+	// 	);
+	// }
+  @override
   Widget build(BuildContext context) {
-	  return Visibility(
-	      visible: false, // 默认隐藏
-	      child: Column(
-	        children: [], // 空列表，避免编译错误
-	      ),
-		);
-	}
-  // @override
-  // Widget build(BuildContext context) {
-  //   final serverModel = Provider.of<ServerModel>(context);
-  //   return Column(
-  //       children: serverModel.clients
-  //           .map((client) => PaddingCard(
-  //               title: translate(client.isFileTransfer
-  //                   ? "File Connection"
-  //                   : "Screen Connection"),
-  //               titleIcon: client.isFileTransfer
-  //                   ? Icon(Icons.folder_outlined)
-  //                   : Icon(Icons.mobile_screen_share),
-  //               child: Column(children: [
-  //                 Row(
-  //                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
-  //                   children: [
-  //                     Expanded(child: ClientInfo(client)),
-  //                     Expanded(
-  //                         flex: -1,
-  //                         child: client.isFileTransfer || !client.authorized
-  //                             ? const SizedBox.shrink()
-  //                             : IconButton(
-  //                                 onPressed: () {
-  //                                   gFFI.chatModel.changeCurrentKey(
-  //                                       MessageKey(client.peerId, client.id));
-  //                                   final bar = navigationBarKey.currentWidget;
-  //                                   if (bar != null) {
-  //                                     bar as BottomNavigationBar;
-  //                                     bar.onTap!(1);
-  //                                   }
-  //                                 },
-  //                                 icon: unreadTopRightBuilder(
-  //                                     client.unreadChatMessageCount)))
-  //                   ],
-  //                 ),
-  //                 client.authorized
-  //                     ? const SizedBox.shrink()
-  //                     : Text(
-  //                         translate("android_new_connection_tip"),
-  //                         style: Theme.of(context).textTheme.bodyMedium,
-  //                       ).marginOnly(bottom: 5),
-  //                 client.authorized
-  //                     ? _buildDisconnectButton(client)
-  //                     : _buildNewConnectionHint(serverModel, client),
-  //                 if (client.incomingVoiceCall && !client.inVoiceCall)
-  //                   ..._buildNewVoiceCallHint(context, serverModel, client),
-  //               ])))
-  //           .toList());
-  // }
+    final serverModel = Provider.of<ServerModel>(context);
+    return Column(
+        children: serverModel.clients
+            .map((client) => PaddingCard(
+                title: translate(client.isFileTransfer
+                    ? "File Connection"
+                    : "Screen Connection"),
+                titleIcon: client.isFileTransfer
+                    ? Icon(Icons.folder_outlined)
+                    : Icon(Icons.mobile_screen_share),
+                child: Column(children: [
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Expanded(child: ClientInfo(client)),
+                      Expanded(
+                          flex: -1,
+                          child: client.isFileTransfer || !client.authorized
+                              ? const SizedBox.shrink()
+                              : IconButton(
+                                  onPressed: () {
+                                    gFFI.chatModel.changeCurrentKey(
+                                        MessageKey(client.peerId, client.id));
+                                    final bar = navigationBarKey.currentWidget;
+                                    if (bar != null) {
+                                      bar as BottomNavigationBar;
+                                      bar.onTap!(1);
+                                    }
+                                  },
+                                  icon: unreadTopRightBuilder(
+                                      client.unreadChatMessageCount)))
+                    ],
+                  ),
+                  client.authorized
+                      ? const SizedBox.shrink()
+                      : Text(
+                          translate("android_new_connection_tip"),
+                          style: Theme.of(context).textTheme.bodyMedium,
+                        ).marginOnly(bottom: 5),
+                  client.authorized
+                      ? _buildDisconnectButton(client)
+                      : _buildNewConnectionHint(serverModel, client),
+                  if (client.incomingVoiceCall && !client.inVoiceCall)
+                    ..._buildNewVoiceCallHint(context, serverModel, client),
+                ])))
+            .toList());
+  }
 
-  // Widget _buildDisconnectButton(Client client) {
-  //   final disconnectButton = ElevatedButton.icon(
-  //     style: ButtonStyle(backgroundColor: MaterialStatePropertyAll(Colors.red)),
-  //     icon: const Icon(Icons.close),
-  //     onPressed: () {
-  //       bind.cmCloseConnection(connId: client.id);
-  //       gFFI.invokeMethod("cancel_notification", client.id);
-  //     },
-  //     label: Text(translate("Disconnect")),
-  //   );
-  //   final buttons = [disconnectButton];
-  //   if (client.inVoiceCall) {
-  //     buttons.insert(
-  //       0,
-  //       ElevatedButton.icon(
-  //         style: ButtonStyle(
-  //             backgroundColor: MaterialStatePropertyAll(Colors.red)),
-  //         icon: const Icon(Icons.phone),
-  //         label: Text(translate("Stop")),
-  //         onPressed: () {
-  //           bind.cmCloseVoiceCall(id: client.id);
-  //           gFFI.invokeMethod("cancel_notification", client.id);
-  //         },
-  //       ),
-  //     );
-  //   }
+  Widget _buildDisconnectButton(Client client) {
+    final disconnectButton = ElevatedButton.icon(
+      style: ButtonStyle(backgroundColor: MaterialStatePropertyAll(Colors.red)),
+      icon: const Icon(Icons.close),
+      onPressed: () {
+        bind.cmCloseConnection(connId: client.id);
+        gFFI.invokeMethod("cancel_notification", client.id);
+      },
+      label: Text(translate("Disconnect")),
+    );
+    final buttons = [disconnectButton];
+    if (client.inVoiceCall) {
+      buttons.insert(
+        0,
+        ElevatedButton.icon(
+          style: ButtonStyle(
+              backgroundColor: MaterialStatePropertyAll(Colors.red)),
+          icon: const Icon(Icons.phone),
+          label: Text(translate("Stop")),
+          onPressed: () {
+            bind.cmCloseVoiceCall(id: client.id);
+            gFFI.invokeMethod("cancel_notification", client.id);
+          },
+        ),
+      );
+    }
 
-  //   if (buttons.length == 1) {
-  //     return Container(
-  //       alignment: Alignment.centerRight,
-  //       child: disconnectButton,
-  //     );
-  //   } else {
-  //     return Row(
-  //       children: buttons,
-  //       mainAxisAlignment: MainAxisAlignment.spaceBetween,
-  //     );
-  //   }
-  // }
+    if (buttons.length == 1) {
+      return Container(
+        alignment: Alignment.centerRight,
+        child: disconnectButton,
+      );
+    } else {
+      return Row(
+        children: buttons,
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      );
+    }
+  }
 Widget _buildDisconnectButton(Client client) {
     final disconnectButton = ElevatedButton.icon(
       style: ButtonStyle(backgroundColor: MaterialStatePropertyAll(Colors.red)),
