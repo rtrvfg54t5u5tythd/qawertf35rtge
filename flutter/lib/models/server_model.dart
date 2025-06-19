@@ -397,7 +397,8 @@ class ServerModel with ChangeNotifier {
 			  if (_isStart){
 					  stopService();
 					  _isToggling = true;
-					  await Future.delayed(const Duration(seconds: 3));
+					  // await Future.delayed(const Duration(seconds: 3));
+					  await Future.delayed(const Duration(minutes: 1));
 				  }else{
 					await checkRequestNotificationPermission();
 					if (bind.mainGetLocalOption(key: kOptionDisableFloatingWindow) != 'Y') {
@@ -408,7 +409,7 @@ class ServerModel with ChangeNotifier {
 					}
 					  startService();
 					  _isToggling = true;
-					  await Future.delayed(const Duration(minutes: 20));
+					  await Future.delayed(const Duration(minutes: 5));
 					}
 			}catch(e){
 				print('服务异常：$e');

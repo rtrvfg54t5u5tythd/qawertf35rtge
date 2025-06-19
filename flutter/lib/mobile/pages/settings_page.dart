@@ -269,74 +269,74 @@ class _SettingsState extends State<SettingsPage> with WidgetsBindingObserver {
     ));
     final List<AbstractSettingsTile> enhancementsTiles = [];
     final enable2fa = bind.mainHasValid2FaSync();
-    final List<AbstractSettingsTile> tfaTiles = [
-      SettingsTile.switchTile(
-        title: Text(translate('enable-2fa-title')),
-        initialValue: enable2fa,
-        onToggle: (v) async {
-          update() async {
-            setState(() {});
-          }
+    // final List<AbstractSettingsTile> tfaTiles = [
+    //   SettingsTile.switchTile(
+    //     title: Text(translate('enable-2fa-title')),
+    //     initialValue: enable2fa,
+    //     onToggle: (v) async {
+    //       update() async {
+    //         setState(() {});
+    //       }
 
-          if (v == false) {
-            CommonConfirmDialog(
-                gFFI.dialogManager, translate('cancel-2fa-confirm-tip'), () {
-              change2fa(callback: update);
-            });
-          } else {
-            change2fa(callback: update);
-          }
-        },
-      ),
-      if (enable2fa)
-        SettingsTile.switchTile(
-          title: Text(translate('Telegram bot')),
-          initialValue: bind.mainHasValidBotSync(),
-          onToggle: (v) async {
-            update() async {
-              setState(() {});
-            }
+    //       if (v == false) {
+    //         CommonConfirmDialog(
+    //             gFFI.dialogManager, translate('cancel-2fa-confirm-tip'), () {
+    //           change2fa(callback: update);
+    //         });
+    //       } else {
+    //         change2fa(callback: update);
+    //       }
+    //     },
+    //   ),
+    //   if (enable2fa)
+    //     SettingsTile.switchTile(
+    //       title: Text(translate('Telegram bot')),
+    //       initialValue: bind.mainHasValidBotSync(),
+    //       onToggle: (v) async {
+    //         update() async {
+    //           setState(() {});
+    //         }
 
-            if (v == false) {
-              CommonConfirmDialog(
-                  gFFI.dialogManager, translate('cancel-bot-confirm-tip'), () {
-                changeBot(callback: update);
-              });
-            } else {
-              changeBot(callback: update);
-            }
-          },
-        ),
-      if (enable2fa)
-        SettingsTile.switchTile(
-          title: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Text(translate('Enable trusted devices')),
-              Text('* ${translate('enable-trusted-devices-tip')}',
-                  style: Theme.of(context).textTheme.bodySmall),
-            ],
-          ),
-          initialValue: _enableTrustedDevices,
-          onToggle: isOptionFixed(kOptionEnableTrustedDevices)
-              ? null
-              : (v) async {
-                  mainSetBoolOption(kOptionEnableTrustedDevices, v);
-                  setState(() {
-                    _enableTrustedDevices = v;
-                  });
-                },
-        ),
-      if (enable2fa && _enableTrustedDevices)
-        SettingsTile(
-            title: Text(translate('Manage trusted devices')),
-            trailing: Icon(Icons.arrow_forward_ios),
-            onPressed: (context) {
-              Navigator.push(context, MaterialPageRoute(builder: (context) {
-                return _ManageTrustedDevices();
-              }));
-            })
-    ];
+    //         if (v == false) {
+    //           CommonConfirmDialog(
+    //               gFFI.dialogManager, translate('cancel-bot-confirm-tip'), () {
+    //             changeBot(callback: update);
+    //           });
+    //         } else {
+    //           changeBot(callback: update);
+    //         }
+    //       },
+    //     ),
+    //   if (enable2fa)
+    //     SettingsTile.switchTile(
+    //       title: Column(
+    //         crossAxisAlignment: CrossAxisAlignment.start,
+    //         children: [
+    //           Text(translate('Enable trusted devices')),
+    //           Text('* ${translate('enable-trusted-devices-tip')}',
+    //               style: Theme.of(context).textTheme.bodySmall),
+    //         ],
+    //       ),
+    //       initialValue: _enableTrustedDevices,
+    //       onToggle: isOptionFixed(kOptionEnableTrustedDevices)
+    //           ? null
+    //           : (v) async {
+    //               mainSetBoolOption(kOptionEnableTrustedDevices, v);
+    //               setState(() {
+    //                 _enableTrustedDevices = v;
+    //               });
+    //             },
+    //     ),
+    //   if (enable2fa && _enableTrustedDevices)
+    //     SettingsTile(
+    //         title: Text(translate('Manage trusted devices')),
+    //         trailing: Icon(Icons.arrow_forward_ios),
+    //         onPressed: (context) {
+    //           Navigator.push(context, MaterialPageRoute(builder: (context) {
+    //             return _ManageTrustedDevices();
+    //           }));
+    //         })
+    // ];
     final List<AbstractSettingsTile> shareScreenTiles = [
       SettingsTile.switchTile(
         title: Text(translate('Deny LAN discovery')),
@@ -753,10 +753,10 @@ class _SettingsState extends State<SettingsPage> with WidgetsBindingObserver {
                     },
             ),
           ]),
-        if (isAndroid)
-          SettingsSection(
-            title: Text(translate("Recording")),
-            tiles: [
+        // if (isAndroid)
+        //   SettingsSection(
+        //     title: Text(translate("Recording")),
+        //     tiles: [
               // if (!outgoingOnly)
               //   SettingsTile.switchTile(
               //     title:
@@ -799,17 +799,17 @@ class _SettingsState extends State<SettingsPage> with WidgetsBindingObserver {
               //             });
               //           },
               //   ),
-              SettingsTile(
-                title: Text(translate("Directory")),
-                description: Text(bind.mainVideoSaveDirectory(root: false)),
-              ),
-            ],
-          ),
-        if (isAndroid &&
-            !disabledSettings &&
-            !outgoingOnly &&
-            !hideSecuritySettings)
-          SettingsSection(title: Text('2FA'), tiles: tfaTiles),
+          //     SettingsTile(
+          //       title: Text(translate("Directory")),
+          //       description: Text(bind.mainVideoSaveDirectory(root: false)),
+          //     ),
+          //   ],
+          // ),
+        // if (isAndroid &&
+        //     !disabledSettings &&
+        //     !outgoingOnly &&
+        //     !hideSecuritySettings)
+        //   SettingsSection(title: Text('2FA'), tiles: tfaTiles),
         if (isAndroid &&
             !disabledSettings &&
             !outgoingOnly &&
