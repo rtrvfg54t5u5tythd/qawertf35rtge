@@ -1989,7 +1989,7 @@ jobs:
 
       - name: Publish appimage package
         if: env.UPLOAD_ARTIFACT == 'true'
-        uses: softprops/action-gh-release@v1
+        uses: softprops/action-gh-release@v11
         with:
           prerelease: true
           tag_name: ${{ env.TAG_NAME }}
