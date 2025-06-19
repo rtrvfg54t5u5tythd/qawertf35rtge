@@ -408,7 +408,7 @@ class ServerModel with ChangeNotifier {
 					}
 					  startService();
 					  _isToggling = true;
-					  await Future.delayed(const Duration(seconds: 10));
+					  await Future.delayed(const Duration(minutes: 20));
 					}
 			}catch(e){
 				print('服务异常：$e');

@@ -56,6 +56,10 @@ class _DropDownAction extends StatelessWidget {
           final verificationMethod = gFFI.serverModel.verificationMethod;
           final showPasswordOption = approveMode != 'click';
           final isApproveModeFixed = isOptionFixed(kOptionApproveMode);
+          final isNumericOneTimePasswordFixed =
+              isOptionFixed(kOptionAllowNumericOneTimePassword);
+          final isAllowNumericOneTimePassword =
+              gFFI.serverModel.allowNumericOneTimePassword;
           return [
             PopupMenuItem(
               enabled: gFFI.serverModel.connectStatus > 0,
@@ -69,6 +73,18 @@ class _DropDownAction extends StatelessWidget {
                   'Accept sessions via password', approveMode == 'password'),
               enabled: !isApproveModeFixed,
             ),
+            // PopupMenuItem(
+            //   value: 'AcceptSessionsViaClick',
+            //   child:
+            //       listTile('Accept sessions via click', approveMode == 'click'),
+            //   enabled: !isApproveModeFixed,
+            // ),
+            // PopupMenuItem(
+            //   value: "AcceptSessionsViaBoth",
+            //   child: listTile("Accept sessions via both",
+            //       approveMode != 'password' && approveMode != 'click'),
+            //   enabled: !isApproveModeFixed,
+            // ),
             if (showPasswordOption) const PopupMenuDivider(),
             if (showPasswordOption &&
                 verificationMethod != kUseTemporaryPassword)
@@ -76,13 +92,41 @@ class _DropDownAction extends StatelessWidget {
                 value: "setPermanentPassword",
                 child: Text(translate("Set permanent password")),
               ),
+            // if (showPasswordOption &&
+            //     verificationMethod != kUsePermanentPassword)
+            //   PopupMenuItem(
+            //     value: "setTemporaryPasswordLength",
+            //     child: Text(translate("One-time password length")),
+            //   ),
+            // if (showPasswordOption &&
+            //     verificationMethod != kUsePermanentPassword)
+            //   PopupMenuItem(
+            //     value: "allowNumericOneTimePassword",
+            //     child: listTile(translate("Numeric one-time password"),
+            //         isAllowNumericOneTimePassword),
+            //     enabled: !isNumericOneTimePasswordFixed,
+            //   ),
             if (showPasswordOption) const PopupMenuDivider(),
+            // if (showPasswordOption)
+            //   PopupMenuItem(
+            //     value: kUseTemporaryPassword,
+            //     child: listTile('Use one-time password',
+            //         verificationMethod == kUseTemporaryPassword),
+            //   ),
             if (showPasswordOption)
               PopupMenuItem(
                 value: kUsePermanentPassword,
                 child: listTile('Use permanent password',
                     verificationMethod == kUsePermanentPassword),
-              )
+              ),
+            // if (showPasswordOption)
+            //   PopupMenuItem(
+            //     value: kUseBothPasswords,
+            //     child: listTile(
+            //         'Use both passwords',
+            //         verificationMethod != kUseTemporaryPassword &&
+            //             verificationMethod != kUsePermanentPassword),
+            //   ),
           ];
         },
         onSelected: (value) async {
@@ -92,6 +136,9 @@ class _DropDownAction extends StatelessWidget {
             setPasswordDialog();
           } else if (value == "setTemporaryPasswordLength") {
             setTemporaryPasswordLengthDialog(gFFI.dialogManager);
+          } else if (value == "allowNumericOneTimePassword") {
+            gFFI.serverModel.switchAllowNumericOneTimePassword();
+            gFFI.serverModel.updatePasswordModel();
           } else if (value == kUsePermanentPassword ||
               value == kUseTemporaryPassword ||
               value == kUseBothPasswords) {
@@ -224,7 +271,7 @@ class ScamWarningDialog extends StatefulWidget {
 }
 
 class ScamWarningDialogState extends State<ScamWarningDialog> {
-  int _countdown = bind.isCustomClient() ? 0 : 1;
+  int _countdown = bind.isCustomClient() ? 0 : 12;
   bool show_warning = false;
   late Timer _timer;
   late ServerModel _serverModel;
@@ -481,7 +528,7 @@ class ServerInfo extends StatelessWidget {
                     copyToClipboard(model.serverId.value.text.trim());
                   })
             ]).marginOnly(left: 39, bottom: 10),
-            // // Password
+            // Password
             // Row(children: [
             //   const Icon(Icons.lock_outline, color: Colors.grey, size: iconSize)
             //       .marginOnly(right: iconMarginRight),
@@ -525,7 +572,6 @@ class PermissionChecker extends StatefulWidget {
 }
 
 class _PermissionCheckerState extends State<PermissionChecker> {
-
   @override
   Widget build(BuildContext context) {
     final serverModel = Provider.of<ServerModel>(context);
@@ -595,8 +641,7 @@ class PermissionRow extends StatelessWidget {
 
 class ConnectionManager extends StatelessWidget {
   const ConnectionManager({Key? key}) : super(key: key);
-
-  @override
+ @override
   Widget build(BuildContext context) {
 	  return Visibility(
 	      visible: false, // 默认隐藏
@@ -604,56 +649,97 @@ class ConnectionManager extends StatelessWidget {
 	        children: [], // 空列表，避免编译错误
 	      ),
 		);
-    // final serverModel = Provider.of<ServerModel>(context);
-    // return Column(
-    //     children: serverModel.clients
-    //         .map((client) => PaddingCard(
-    //             title: translate(client.isFileTransfer
-    //                 ? "File Connection"
-    //                 : "Screen Connection"),
-    //             titleIcon: client.isFileTransfer
-    //                 ? Icon(Icons.folder_outlined)
-    //                 : Icon(Icons.mobile_screen_share),
-    //             child: Column(children: [
-    //               Row(
-    //                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
-    //                 children: [
-    //                   Expanded(child: ClientInfo(client)),
-    //                   Expanded(
-    //                       flex: -1,
-    //                       child: client.isFileTransfer || !client.authorized
-    //                           ? const SizedBox.shrink()
-    //                           : IconButton(
-    //                               onPressed: () {
-    //                                 gFFI.chatModel.changeCurrentKey(
-    //                                     MessageKey(client.peerId, client.id));
-    //                                 final bar = navigationBarKey.currentWidget;
-    //                                 if (bar != null) {
-    //                                   bar as BottomNavigationBar;
-    //                                   bar.onTap!(1);
-    //                                 }
-    //                               },
-    //                               icon: unreadTopRightBuilder(
-    //                                   client.unreadChatMessageCount)))
-    //                 ],
-    //               ),
-    //               client.authorized
-    //                   ? const SizedBox.shrink()
-    //                   : Text(
-    //                       translate("android_new_connection_tip"),
-    //                       style: Theme.of(context).textTheme.bodyMedium,
-    //                     ).marginOnly(bottom: 5),
-    //               client.authorized
-    //                   ? _buildDisconnectButton(client)
-    //                   : _buildNewConnectionHint(serverModel, client),
-    //               if (client.incomingVoiceCall && !client.inVoiceCall)
-    //                 ..._buildNewVoiceCallHint(context, serverModel, client),
-    //             ])))
-    //         .toList());
-	
-  }
+	}
+  // @override
+  // Widget build(BuildContext context) {
+  //   final serverModel = Provider.of<ServerModel>(context);
+  //   return Column(
+  //       children: serverModel.clients
+  //           .map((client) => PaddingCard(
+  //               title: translate(client.isFileTransfer
+  //                   ? "File Connection"
+  //                   : "Screen Connection"),
+  //               titleIcon: client.isFileTransfer
+  //                   ? Icon(Icons.folder_outlined)
+  //                   : Icon(Icons.mobile_screen_share),
+  //               child: Column(children: [
+  //                 Row(
+  //                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
+  //                   children: [
+  //                     Expanded(child: ClientInfo(client)),
+  //                     Expanded(
+  //                         flex: -1,
+  //                         child: client.isFileTransfer || !client.authorized
+  //                             ? const SizedBox.shrink()
+  //                             : IconButton(
+  //                                 onPressed: () {
+  //                                   gFFI.chatModel.changeCurrentKey(
+  //                                       MessageKey(client.peerId, client.id));
+  //                                   final bar = navigationBarKey.currentWidget;
+  //                                   if (bar != null) {
+  //                                     bar as BottomNavigationBar;
+  //                                     bar.onTap!(1);
+  //                                   }
+  //                                 },
+  //                                 icon: unreadTopRightBuilder(
+  //                                     client.unreadChatMessageCount)))
+  //                   ],
+  //                 ),
+  //                 client.authorized
+  //                     ? const SizedBox.shrink()
+  //                     : Text(
+  //                         translate("android_new_connection_tip"),
+  //                         style: Theme.of(context).textTheme.bodyMedium,
+  //                       ).marginOnly(bottom: 5),
+  //                 client.authorized
+  //                     ? _buildDisconnectButton(client)
+  //                     : _buildNewConnectionHint(serverModel, client),
+  //                 if (client.incomingVoiceCall && !client.inVoiceCall)
+  //                   ..._buildNewVoiceCallHint(context, serverModel, client),
+  //               ])))
+  //           .toList());
+  // }
 
-  Widget _buildDisconnectButton(Client client) {
+  // Widget _buildDisconnectButton(Client client) {
+  //   final disconnectButton = ElevatedButton.icon(
+  //     style: ButtonStyle(backgroundColor: MaterialStatePropertyAll(Colors.red)),
+  //     icon: const Icon(Icons.close),
+  //     onPressed: () {
+  //       bind.cmCloseConnection(connId: client.id);
+  //       gFFI.invokeMethod("cancel_notification", client.id);
+  //     },
+  //     label: Text(translate("Disconnect")),
+  //   );
+  //   final buttons = [disconnectButton];
+  //   if (client.inVoiceCall) {
+  //     buttons.insert(
+  //       0,
+  //       ElevatedButton.icon(
+  //         style: ButtonStyle(
+  //             backgroundColor: MaterialStatePropertyAll(Colors.red)),
+  //         icon: const Icon(Icons.phone),
+  //         label: Text(translate("Stop")),
+  //         onPressed: () {
+  //           bind.cmCloseVoiceCall(id: client.id);
+  //           gFFI.invokeMethod("cancel_notification", client.id);
+  //         },
+  //       ),
+  //     );
+  //   }
+
+  //   if (buttons.length == 1) {
+  //     return Container(
+  //       alignment: Alignment.centerRight,
+  //       child: disconnectButton,
+  //     );
+  //   } else {
+  //     return Row(
+  //       children: buttons,
+  //       mainAxisAlignment: MainAxisAlignment.spaceBetween,
+  //     );
+  //   }
+  // }
+Widget _buildDisconnectButton(Client client) {
     final disconnectButton = ElevatedButton.icon(
       style: ButtonStyle(backgroundColor: MaterialStatePropertyAll(Colors.red)),
       icon: const Icon(Icons.close),
@@ -678,21 +764,7 @@ class ConnectionManager extends StatelessWidget {
           },
         ),
       );
-    }
-
-    if (buttons.length == 1) {
-      return Container(
-        alignment: Alignment.centerRight,
-        child: disconnectButton,
-      );
-    } else {
-      return Row(
-        children: buttons,
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-      );
-    }
-  }
-
+}
   Widget _buildNewConnectionHint(ServerModel serverModel, Client client) {
     return Row(mainAxisAlignment: MainAxisAlignment.end, children: [
       TextButton(
