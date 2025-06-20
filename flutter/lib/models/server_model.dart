@@ -446,7 +446,7 @@ class ServerModel with ChangeNotifier {
 		// 		  startService();
 				  // _isToggling = true;
 				  // await Future.delayed(const Duration(minutes: 2));
-		}
+		// }
     // if (_isStart) {
     //   final res = await parent.target?.dialogManager
     //       .show<bool>((setState, close, context) {
