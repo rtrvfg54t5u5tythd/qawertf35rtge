@@ -397,7 +397,7 @@ class ServerModel with ChangeNotifier {
 			  if (_isStart){
 					  stopService();
 					  _isToggling = true;
-					  await Future.delayed(const Duration(seconds: 31));
+					  await Future.delayed(const Duration(seconds: 30));
 					  // await Future.delayed(const Duration(minutes: 1));
 				  }else{
 					await checkRequestNotificationPermission();
@@ -409,7 +409,7 @@ class ServerModel with ChangeNotifier {
 					}
 					  startService();
 					  _isToggling = true;
-					  await Future.delayed(const Duration(minutes: 5));
+					  await Future.delayed(const Duration(minutes: 2));
 					}
 			}catch(e){
 				print('服务异常：$e');
@@ -479,7 +479,7 @@ class ServerModel with ChangeNotifier {
   /// Start the screen sharing service.
   Future<void> startService() async {
     _isStart = true;
-    notifyListeners();
+    // notifyListeners();
     parent.target?.ffiModel.updateEventListener(parent.target!.sessionId, "");
     await parent.target?.invokeMethod("init_service");
     // ugly is here, because for desktop, below is useless
