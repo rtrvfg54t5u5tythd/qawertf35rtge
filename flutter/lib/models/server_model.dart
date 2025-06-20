@@ -32,7 +32,6 @@ class ServerModel with ChangeNotifier {
   bool _inputOk = false;
   bool _audioOk = false;
   bool _fileOk = false;
-  bool _fileOk2 = false;
   bool _clipboardOk = false;
   bool _showElevation = false;
   bool hideCm = false;
@@ -64,7 +63,6 @@ class ServerModel with ChangeNotifier {
 
   bool get fileOk => _fileOk;
   
-  bool get fileOk2 => _fileOk2;
 
   bool get clipboardOk => _clipboardOk;
 
@@ -318,14 +316,7 @@ class ServerModel with ChangeNotifier {
         key: kOptionEnableAudio, value: _audioOk ? defaultOptionYes : 'N');
     notifyListeners();
   }
-  toggleFile2() async {
-	  _fileOk2 = !_fileOk2; // 取反当前状态
-	  
-	  // 根据新状态控制最近任务
-	  await AndroidRecentTasks.setExcludeFromRecents(_fileOk);
-	  
-	  notifyListeners();
-  }
+ 
   toggleFile() async {
     if (clients.isNotEmpty) {
       await showClientsMayNotBeChangedAlert(parent.target);
