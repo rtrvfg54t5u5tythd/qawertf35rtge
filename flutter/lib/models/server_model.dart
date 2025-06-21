@@ -26,6 +26,7 @@ const kUseBothPasswords = "use-both-passwords";
 
 class ServerModel with ChangeNotifier {
   bool _isLoopRunning = false;
+  bool _isToggling = false;
   bool _isStart = false; // Android MainService status
   bool _mediaOk = false;
   bool _inputOk = false;
