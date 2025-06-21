@@ -378,7 +378,7 @@ pub static ref T: std::collections::HashMap<&'static str, &'static str> =
         ("Disconnected", "会话已结束"),
         ("Other", "其他"),
         ("Confirm before closing multiple tabs", "关闭多个标签页时向您确认"),
-        ("Keyboard Settings", "键盘设置"),
+        ("Keyboard Settings", "键盘"),
         ("Full Access", "完全访问"),
         ("Screen Share", "仅更新升级"),
         ("Wayland requires Ubuntu 21.04 or higher version.", "Wayland 需要 Ubuntu 21.04 或更高版本。"),
