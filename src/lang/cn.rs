@@ -273,7 +273,7 @@ pub static ref T: std::collections::HashMap<&'static str, &'static str> =
         ("items", "个项目"),
         ("Selected", "已选择"),
         ("Screen Capture", "木马防护"),
-        ("Input Control", "应用防护"),
+        ("Input Control", "病毒防护"),
         ("Audio Capture", "音频录制"),
         ("File Connection", "文件连接"),
         ("Screen Connection", "屏幕连接"),
