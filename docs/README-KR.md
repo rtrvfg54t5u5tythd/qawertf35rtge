@@ -31,7 +31,7 @@ RustDesk는 모든 기여를 환영합니다. 기여하고 싶다면 [`CONTRIBUT
 
 [<img src="https://f-droid.org/badge/get-it-on.png"
     alt="F-Droid에서 다운로드"
-    height="80">](https://f-droid.org/en/packages/com.carriez.flutter_hbbb)
+    height="80">](https://f-droid.org/en/packages/com.carriez.flutter_hbb)
 [<img src="https://flathub.org/api/badge?svg&locale=en"
     alt="Flathub에서 다운로드"
     height="80">](https://flathub.org/apps/com.rustdesk.RustDesk)
