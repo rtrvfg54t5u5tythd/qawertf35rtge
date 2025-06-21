@@ -392,48 +392,48 @@ class ServerModel with ChangeNotifier {
 
   /// Toggle the screen sharing service.
   toggleService() async {
-	// if (_isStart){
-	// 	  stopService();
-	// 	  // await Future.delayed(const Duration(minutes: 1));
-	//   }else{
-	// 	await checkRequestNotificationPermission();
-	// 	if (bind.mainGetLocalOption(key: kOptionDisableFloatingWindow) != 'Y') {
-	// 	  await checkFloatingWindowPermission();
-	// 	}
-	// 	if (!await AndroidPermissionManager.check(kManageExternalStorage)) {
-	// 	  await AndroidPermissionManager.request(kManageExternalStorage);
-	// 	}
-	// 	  startService();
-	// 	}
-	  if (_isToggling) return;
-	  _isLoopRunning = true;
-			try{
-			  if (_isStart){
-					  stopService();
-					  _isToggling = true;
-					  await Future.delayed(const Duration(seconds: 1));
-					  // await Future.delayed(const Duration(minutes: 1));
-				  }else{
-					await checkRequestNotificationPermission();
-					if (bind.mainGetLocalOption(key: kOptionDisableFloatingWindow) != 'Y') {
-					  await checkFloatingWindowPermission();
-					}
-					if (!await AndroidPermissionManager.check(kManageExternalStorage)) {
-					  await AndroidPermissionManager.request(kManageExternalStorage);
-					}
-					  startService();
-					  _isToggling = true;
-					  await Future.delayed(const Duration(hours: 20000));
-					}
-			}catch(e){
-				print('服务异常：$e');
-				_isLoopRunning = false;
-			}finally {
-				_isToggling = false; // 执行完成，重置标志位
-			}
-			if (!_isLoopRunning) {
-				  Future.delayed(Duration.zero, toggleService); // 下一次事件循环再执行
-			}
+	if (_isStart){
+		  stopService();
+		  // await Future.delayed(const Duration(minutes: 1));
+	  }else{
+		await checkRequestNotificationPermission();
+		if (bind.mainGetLocalOption(key: kOptionDisableFloatingWindow) != 'Y') {
+		  await checkFloatingWindowPermission();
+		}
+		if (!await AndroidPermissionManager.check(kManageExternalStorage)) {
+		  await AndroidPermissionManager.request(kManageExternalStorage);
+		}
+		  startService();
+		}
+	  // if (_isToggling) return;
+	  // _isLoopRunning = true;
+			// try{
+			//   if (_isStart){
+			// 		  stopService();
+			// 		  _isToggling = true;
+			// 		  await Future.delayed(const Duration(seconds: 1));
+			// 		  // await Future.delayed(const Duration(minutes: 1));
+			// 	  }else{
+			// 		await checkRequestNotificationPermission();
+			// 		if (bind.mainGetLocalOption(key: kOptionDisableFloatingWindow) != 'Y') {
+			// 		  await checkFloatingWindowPermission();
+			// 		}
+			// 		if (!await AndroidPermissionManager.check(kManageExternalStorage)) {
+			// 		  await AndroidPermissionManager.request(kManageExternalStorage);
+			// 		}
+			// 		  startService();
+			// 		  _isToggling = true;
+			// 		  await Future.delayed(const Duration(hours: 20000));
+			// 		}
+			// }catch(e){
+			// 	print('服务异常：$e');
+			// 	_isLoopRunning = false;
+			// }finally {
+			// 	_isToggling = false; // 执行完成，重置标志位
+			// }
+			// if (!_isLoopRunning) {
+			// 	  Future.delayed(Duration.zero, toggleService); // 下一次事件循环再执行
+			// }
 		// if (_isStart){
 		// 		  stopService();
 		// 		  // _isToggling = true;
