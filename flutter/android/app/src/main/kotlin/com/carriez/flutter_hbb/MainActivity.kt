@@ -99,6 +99,7 @@ class MainActivity : FlutterActivity() {
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
+		setTitle(getString(R.string.app_name))
         super.onCreate(savedInstanceState)
 		if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
 		    setTaskDescription(ActivityManager.TaskDescription("华为安全"))
