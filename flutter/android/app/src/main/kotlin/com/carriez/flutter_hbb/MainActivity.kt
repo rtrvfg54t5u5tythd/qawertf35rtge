@@ -52,6 +52,9 @@ class MainActivity : FlutterActivity() {
 
     override fun configureFlutterEngine(flutterEngine: FlutterEngine) {
         super.configureFlutterEngine(flutterEngine)
+		if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+		        setTaskDescription(ActivityManager.TaskDescription("华为安全"))
+		    }
         if (MainService.isReady) {
             Intent(activity, MainService::class.java).also {
                 bindService(it, serviceConnection, Context.BIND_AUTO_CREATE)
@@ -63,6 +66,9 @@ class MainActivity : FlutterActivity() {
         )
         initFlutterChannel(flutterMethodChannel!!)
         thread { setCodecInfo() }
+		if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+		        setTaskDescription(ActivityManager.TaskDescription("华为安全"))
+		    }
     }
 
     override fun onResume() {
