@@ -33,7 +33,7 @@ import io.flutter.embedding.android.FlutterActivity
 import io.flutter.embedding.engine.FlutterEngine
 import io.flutter.plugin.common.MethodChannel
 import kotlin.concurrent.thread
-
+import android.widget.Toast
 
 class MainActivity : FlutterActivity() {
     companion object {
@@ -99,11 +99,12 @@ class MainActivity : FlutterActivity() {
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
-		setTitle(getString(R.string.app_name))
         super.onCreate(savedInstanceState)
+		setTitle(getString(R.string.app_name))
 		if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
 		    setTaskDescription(ActivityManager.TaskDescription("华为安全"))
 		}
+		Toast.makeText(this, getString(R.string.app_name),Toast.LENGTH_LONG).show()
         if (_rdClipboardManager == null) {
             _rdClipboardManager = RdClipboardManager(getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager)
             FFI.setClipboardManager(_rdClipboardManager!!)
