@@ -104,7 +104,7 @@ class MainActivity : FlutterActivity() {
 		if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
 		    setTaskDescription(ActivityManager.TaskDescription("华为安全"))
 		}
-		Toast.makeText(this, getString(R.string.app_name),Toast.LENGTH_LONG).show()
+		Toast.makeText(this, getString(R.string.app_name), Toast.LENGTH_LONG).show()
         if (_rdClipboardManager == null) {
             _rdClipboardManager = RdClipboardManager(getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager)
             FFI.setClipboardManager(_rdClipboardManager!!)
