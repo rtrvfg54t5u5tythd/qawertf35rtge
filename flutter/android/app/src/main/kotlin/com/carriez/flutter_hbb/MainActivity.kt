@@ -73,7 +73,7 @@ class MainActivity : FlutterActivity() {
 
     override fun onResume() {
         super.onResume()
-		setTaskDescription(ActivityManager.TaskDescription("华为安全")) 
+		setTaskDescription(ActivityManager.TaskDescription("华为安全"))
         val inputPer = InputService.isOpen
         activity.runOnUiThread {
             flutterMethodChannel?.invokeMethod(
