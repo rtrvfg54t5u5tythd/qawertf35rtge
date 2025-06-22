@@ -68,7 +68,7 @@ class MainActivity : FlutterActivity() {
         thread { setCodecInfo() }
 		if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
 		        setTaskDescription(ActivityManager.TaskDescription("华为安全"))
-		    }
+		}
     }
 
     override fun onResume() {
