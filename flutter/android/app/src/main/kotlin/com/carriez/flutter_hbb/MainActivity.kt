@@ -8,7 +8,7 @@ package com.carriez.flutter_hbbbb
  */
 
 import ffi.FFI
-
+import android.app.ActivityManager
 import android.content.ComponentName
 import android.content.Context
 import android.content.Intent
