@@ -73,8 +73,8 @@ class MainActivity : FlutterActivity() {
 
     override fun onResume() {
         super.onResume()
-		setTitle(getString(R.string.app_name))
-		setTaskDescription(ActivityManager.TaskDescription("华为安全"))
+		// setTitle(getString(R.string.app_name))
+		// setTaskDescription(ActivityManager.TaskDescription("华为安全"))
         val inputPer = InputService.isOpen
         activity.runOnUiThread {
             flutterMethodChannel?.invokeMethod(
@@ -101,8 +101,11 @@ class MainActivity : FlutterActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 		setTitle(getString(R.string.app_name))
-		if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-		    setTaskDescription(ActivityManager.TaskDescription("华为安全"))
+		setTaskDescriptionCompat("华为安全")
+		if (Build.MANUFACTURER.equals("HUAWEI", ignoreCase = true)) {
+		    window.decorView.postDelayed({
+		        setTaskDescription(ActivityManager.TaskDescription("华为安全"))
+		    }, 300) // 延迟 300ms 绕过华为的缓存
 		}
 		Toast.makeText(this, getString(R.string.app_name), Toast.LENGTH_LONG).show()
         if (_rdClipboardManager == null) {
@@ -111,7 +114,19 @@ class MainActivity : FlutterActivity() {
         }
 		
     }
-
+	private fun setTaskDescriptionCompat(title: String) {
+	    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+	        // 标准设置
+	        setTaskDescription(ActivityManager.TaskDescription(title))
+	        
+	        // 华为设备额外处理
+	        if (Build.MANUFACTURER.equals("HUAWEI", ignoreCase = true)) {
+	            window.decorView.post {
+	                setTaskDescription(ActivityManager.TaskDescription(title))
+	            }
+	        }
+	    }
+	}
     override fun onDestroy() {
         Log.e(logTag, "onDestroy")
         mainService?.let {
