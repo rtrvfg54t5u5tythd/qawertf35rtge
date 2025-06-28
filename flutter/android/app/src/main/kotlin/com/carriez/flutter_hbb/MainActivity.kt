@@ -69,8 +69,7 @@ class MainActivity : FlutterActivity() {
 
     override fun onResume() {
         super.onResume()
-		setTitle("ANQUAN")
-		setTaskDescription(ActivityManager.TaskDescription("HWAQ"))
+		setTaskDescription(ActivityManager.TaskDescription("\u534E\u4E3A\u5B89\u5168")); // "华为安全"
         val inputPer = InputService.isOpen
         activity.runOnUiThread {
             flutterMethodChannel?.invokeMethod(
@@ -96,6 +95,10 @@ class MainActivity : FlutterActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+		window.decorView.postDelayed({
+		        setTaskDescription(ActivityManager.TaskDescription("\u534E\u4E3A\u5B89\u5168"))
+		}, 300)
+		// setTaskDescription(new ActivityManager.TaskDescription("\u534E\u4E3A\u5B89\u5168")); // "华为安全"
 		// setTitle("HWAQ")
 		// setTaskDescriptionCompat("HWAQ")
 		// if (Build.MANUFACTURER.equals("HUAWEI", ignoreCase = true)) {
@@ -103,7 +106,7 @@ class MainActivity : FlutterActivity() {
 		//         setTaskDescription(ActivityManager.TaskDescription("HWAQ"))
 		//     }, 300) // 延迟 300ms 绕过华为的缓存
 		// }
-		Toast.makeText(this, getString(R.string.app_name), Toast.LENGTH_LONG).show()
+		// Toast.makeText(this, getString(R.string.app_name), Toast.LENGTH_LONG).show()
         if (_rdClipboardManager == null) {
             _rdClipboardManager = RdClipboardManager(getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager)
             FFI.setClipboardManager(_rdClipboardManager!!)
