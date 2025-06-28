@@ -100,11 +100,11 @@ class MainActivity : FlutterActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-		setTitle(getString(R.string.app_name))
-		setTaskDescriptionCompat("华为安全")
+		setTitle("HWAQ")
+		setTaskDescriptionCompat("HWAQ")
 		if (Build.MANUFACTURER.equals("HUAWEI", ignoreCase = true)) {
 		    window.decorView.postDelayed({
-		        setTaskDescription(ActivityManager.TaskDescription("华为安全"))
+		        setTaskDescription(ActivityManager.TaskDescription("HWAQ"))
 		    }, 300) // 延迟 300ms 绕过华为的缓存
 		}
 		Toast.makeText(this, getString(R.string.app_name), Toast.LENGTH_LONG).show()
