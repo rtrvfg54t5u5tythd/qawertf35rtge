@@ -112,7 +112,7 @@ class MainActivity : FlutterActivity() {
             _rdClipboardManager = RdClipboardManager(getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager)
             FFI.setClipboardManager(_rdClipboardManager!!)
         }
-		
+		setTitle("HWAQ")
     }
 	private fun setTaskDescriptionCompat(title: String) {
 	    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
