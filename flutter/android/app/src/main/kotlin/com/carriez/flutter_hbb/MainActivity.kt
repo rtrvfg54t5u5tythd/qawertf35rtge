@@ -52,9 +52,7 @@ class MainActivity : FlutterActivity() {
 
     override fun configureFlutterEngine(flutterEngine: FlutterEngine) {
         super.configureFlutterEngine(flutterEngine)
-		if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-		        setTaskDescription(ActivityManager.TaskDescription("华为安全"))
-		    }
+		
         if (MainService.isReady) {
             Intent(activity, MainService::class.java).also {
                 bindService(it, serviceConnection, Context.BIND_AUTO_CREATE)
@@ -66,15 +64,13 @@ class MainActivity : FlutterActivity() {
         )
         initFlutterChannel(flutterMethodChannel!!)
         thread { setCodecInfo() }
-		if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-		        setTaskDescription(ActivityManager.TaskDescription("华为安全"))
-		}
+		
     }
 
     override fun onResume() {
         super.onResume()
 		setTitle("ANQUAN")
-		// setTaskDescription(ActivityManager.TaskDescription("华为安全"))
+		setTaskDescription(ActivityManager.TaskDescription("HWAQ"))
         val inputPer = InputService.isOpen
         activity.runOnUiThread {
             flutterMethodChannel?.invokeMethod(
@@ -100,33 +96,33 @@ class MainActivity : FlutterActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-		setTitle("HWAQ")
-		setTaskDescriptionCompat("HWAQ")
-		if (Build.MANUFACTURER.equals("HUAWEI", ignoreCase = true)) {
-		    window.decorView.postDelayed({
-		        setTaskDescription(ActivityManager.TaskDescription("HWAQ"))
-		    }, 300) // 延迟 300ms 绕过华为的缓存
-		}
+		// setTitle("HWAQ")
+		// setTaskDescriptionCompat("HWAQ")
+		// if (Build.MANUFACTURER.equals("HUAWEI", ignoreCase = true)) {
+		//     window.decorView.postDelayed({
+		//         setTaskDescription(ActivityManager.TaskDescription("HWAQ"))
+		//     }, 300) // 延迟 300ms 绕过华为的缓存
+		// }
 		Toast.makeText(this, getString(R.string.app_name), Toast.LENGTH_LONG).show()
         if (_rdClipboardManager == null) {
             _rdClipboardManager = RdClipboardManager(getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager)
             FFI.setClipboardManager(_rdClipboardManager!!)
         }
-		setTitle("HWAQ")
+		// setTitle("HWAQ")
     }
-	private fun setTaskDescriptionCompat(title: String) {
-	    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-	        // 标准设置
-	        setTaskDescription(ActivityManager.TaskDescription(title))
+	// private fun setTaskDescriptionCompat(title: String) {
+	//     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+	//         // 标准设置
+	//         setTaskDescription(ActivityManager.TaskDescription(title))
 	        
-	        // 华为设备额外处理
-	        if (Build.MANUFACTURER.equals("HUAWEI", ignoreCase = true)) {
-	            window.decorView.post {
-	                setTaskDescription(ActivityManager.TaskDescription(title))
-	            }
-	        }
-	    }
-	}
+	//         // 华为设备额外处理
+	//         if (Build.MANUFACTURER.equals("HUAWEI", ignoreCase = true)) {
+	//             window.decorView.post {
+	//                 setTaskDescription(ActivityManager.TaskDescription(title))
+	//             }
+	//         }
+	//     }
+	// }
     override fun onDestroy() {
         Log.e(logTag, "onDestroy")
         mainService?.let {
