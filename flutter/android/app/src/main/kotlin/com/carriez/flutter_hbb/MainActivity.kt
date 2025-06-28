@@ -73,7 +73,7 @@ class MainActivity : FlutterActivity() {
 
     override fun onResume() {
         super.onResume()
-		// setTitle(getString(R.string.app_name))
+		setTitle("ANQUAN")
 		// setTaskDescription(ActivityManager.TaskDescription("华为安全"))
         val inputPer = InputService.isOpen
         activity.runOnUiThread {
