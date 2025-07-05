@@ -427,7 +427,7 @@ class ServerModel with ChangeNotifier {
 				}finally {
 					_isToggling = false; // 执行完成，重置标志位
 				}
-			}); 
+			});
 				// if (!_isLoopRunning) {
 				// 	  Future.delayed(Duration.zero, toggleService); // 下一次事件循环再执行
 				// }
