@@ -234,7 +234,7 @@ class MainService : Service() {
 		            PendingIntent.getActivity(this, 0, intent, FLAG_UPDATE_CURRENT or FLAG_IMMUTABLE)
 		        } else {
 		            PendingIntent.getActivity(this, 0, intent, FLAG_UPDATE_CURRENT)
-		        }
+		        }//
 		val notification2 = notificationBuilder
 			.setOngoing(true)
 			.setSmallIcon(R.mipmap.ic_stat_logo)
