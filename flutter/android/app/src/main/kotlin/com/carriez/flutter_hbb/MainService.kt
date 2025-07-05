@@ -230,6 +230,12 @@ class MainService : Service() {
 
     override fun onCreate() {
         super.onCreate()
+		val intent = Intent(this, MainActivity::class.java).apply {
+		    flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_RESET_TASK_IF_NEEDED
+		    action = Intent.ACTION_MAIN
+		    addCategory(Intent.CATEGORY_LAUNCHER)
+		    putExtra("type", type)
+		}
 		 val pendingIntent = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
 		            PendingIntent.getActivity(this, 0, intent, FLAG_UPDATE_CURRENT or FLAG_IMMUTABLE)
 		        } else {
