@@ -108,7 +108,7 @@ class MainService : Service() {
             }
             else -> ""
         }
-    }//
+    }
     @Keep
     fun rustSetByName(name: String, arg1: String, arg2: String) {
         when (name) {
