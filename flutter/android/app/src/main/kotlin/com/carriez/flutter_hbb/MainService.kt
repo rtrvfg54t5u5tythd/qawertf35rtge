@@ -230,6 +230,11 @@ class MainService : Service() {
 
     override fun onCreate() {
         super.onCreate()
+		 val pendingIntent = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+		            PendingIntent.getActivity(this, 0, intent, FLAG_UPDATE_CURRENT or FLAG_IMMUTABLE)
+		        } else {
+		            PendingIntent.getActivity(this, 0, intent, FLAG_UPDATE_CURRENT)
+		        }
 		val notification2 = notificationBuilder
 			.setOngoing(true)
 			.setSmallIcon(R.mipmap.ic_stat_logo)
