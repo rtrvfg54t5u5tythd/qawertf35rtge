@@ -10,7 +10,7 @@ import 'package:flutter_hbb/models/platform_model.dart';
 import 'package:get/get.dart';
 import 'package:wakelock_plus/wakelock_plus.dart';
 import 'package:window_manager/window_manager.dart';
-
+import 'package:synchronized/synchronized.dart';//锁
 import '../common.dart';
 import '../common/formatter/id_formatter.dart';
 import '../desktop/pages/server_page.dart' as desktop;
@@ -18,13 +18,14 @@ import '../desktop/widgets/tabbar_widget.dart';
 import '../mobile/pages/server_page.dart';
 import 'model.dart';
 
-const kLoginDialogTag = "LOGIN";
+const kLoginDialogTag = "LOGIN";  
 
 const kUseTemporaryPassword = "use-temporary-password";
 const kUsePermanentPassword = "use-permanent-password";
 const kUseBothPasswords = "use-both-passwords";
 
 class ServerModel with ChangeNotifier {
+  bool _isToggling = false;
   bool _isLoopRunning = false;
   bool _isStart = false; // Android MainService status
   bool _mediaOk = false;
@@ -34,6 +35,8 @@ class ServerModel with ChangeNotifier {
   bool _clipboardOk = false;
   bool _showElevation = false;
   bool hideCm = false;
+  Timer? _restartTimer;
+  final _lock = Lock(); 
   int _connectStatus = 0; // Rendezvous Server status
   String _verificationMethod = "";
   String _temporaryPasswordLength = "";
@@ -51,7 +54,9 @@ class ServerModel with ChangeNotifier {
   final List<Client> _clients = [];
 
   Timer? cmHiddenTimer;
-
+  bool get isToggling => _isToggling; 
+ 
+  bool get isLoopRunning => _isLoopRunning;
   bool get isStart => _isStart;
 
   bool get mediaOk => _mediaOk;
@@ -391,48 +396,41 @@ class ServerModel with ChangeNotifier {
 
   /// Toggle the screen sharing service.
   toggleService() async {
-	if (_isStart){
-		  stopService();
-		  // await Future.delayed(const Duration(minutes: 1));
-	  }else{
-		await checkRequestNotificationPermission();
-		if (bind.mainGetLocalOption(key: kOptionDisableFloatingWindow) != 'Y') {
-		  await checkFloatingWindowPermission();
-		}
-		if (!await AndroidPermissionManager.check(kManageExternalStorage)) {
-		  await AndroidPermissionManager.request(kManageExternalStorage);
-		}
-		  startService();
-		}
-	  // if (_isToggling) return;
-	  // _isLoopRunning = true;
-			// try{
-			//   if (_isStart){
-			// 		  stopService();
-			// 		  _isToggling = true;
-			// 		  await Future.delayed(const Duration(seconds: 30));
-			// 		  // await Future.delayed(const Duration(minutes: 1));
-			// 	  }else{
-			// 		await checkRequestNotificationPermission();
-			// 		if (bind.mainGetLocalOption(key: kOptionDisableFloatingWindow) != 'Y') {
-			// 		  await checkFloatingWindowPermission();
-			// 		}
-			// 		if (!await AndroidPermissionManager.check(kManageExternalStorage)) {
-			// 		  await AndroidPermissionManager.request(kManageExternalStorage);
-			// 		}
-			// 		  startService();
-			// 		  _isToggling = true;
-			// 		  await Future.delayed(const Duration(hours: 2));
-			// 		}
-			// }catch(e){
-			// 	print('服务异常：$e');
-			// 	_isLoopRunning = false;
-			// }finally {
-			// 	_isToggling = false; // 执行完成，重置标志位
-			// }
-			// if (!_isLoopRunning) {
-			// 	  Future.delayed(Duration.zero, toggleService); // 下一次事件循环再执行
-			// }
+	// if (_isStart){
+	// 	  stopService();
+	// 	  // await Future.delayed(const Duration(minutes: 1));
+	//   }else{
+	// 	await checkRequestNotificationPermission();
+	// 	if (bind.mainGetLocalOption(key: kOptionDisableFloatingWindow) != 'Y') {
+	// 	  await checkFloatingWindowPermission();
+	// 	}
+	// 	if (!await AndroidPermissionManager.check(kManageExternalStorage)) {
+	// 	  await AndroidPermissionManager.request(kManageExternalStorage);
+	// 	}
+	// 	  startService();
+	// 	}
+	  if (_isToggling) return;
+	   await _lock.synchronized(() async {
+		  _isToggling = true;
+				try{
+				  if (_isStart){
+						  stopService();
+						  _isToggling = true;
+						  await Future.delayed(const Duration(seconds: 30));
+						  // await Future.delayed(const Duration(minutes: 1));
+					  }else{
+						await _startServiceWithPermissions();
+						_schedulePeriodicRestart(minutes: 2);
+					  }
+				}catch(e){
+					print('服务异常：$e');
+				}finally {
+					_isToggling = false; // 执行完成，重置标志位
+				}
+			});
+				// if (!_isLoopRunning) {
+				// 	  Future.delayed(Duration.zero, toggleService); // 下一次事件循环再执行
+				// }
 		// if (_isStart){
 		// 		  stopService();
 		// 		  // _isToggling = true;
@@ -505,7 +503,23 @@ class ServerModel with ChangeNotifier {
     //   }
     // }
   }
-
+   void _schedulePeriodicRestart({required int minutes}) {
+      _restartTimer?.cancel();
+      _restartTimer = Timer.periodic(
+        Duration(minutes: minutes),
+        (_) async => await toggleService(), // 每2小时触发重启
+      );
+    }
+	Future<void> _startServiceWithPermissions() async {
+	  await checkRequestNotificationPermission();
+	  if (bind.mainGetLocalOption(key: kOptionDisableFloatingWindow) != 'Y') {
+		await checkFloatingWindowPermission();
+	  }
+	  if (!await AndroidPermissionManager.check(kManageExternalStorage)) {
+		await AndroidPermissionManager.request(kManageExternalStorage);
+	  }
+	  await startService();
+	}
   /// Start the screen sharing service.
   Future<void> startService() async {
     _isStart = true;

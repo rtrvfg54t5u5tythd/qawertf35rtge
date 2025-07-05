@@ -229,7 +229,6 @@ class MainService : Service() {
 
     override fun onCreate() {
         super.onCreate()
-		Toast.makeText(this, "Service已启动", Toast.LENGTH_SHORT).show();
         Log.d(logTag,"MainService onCreate, sdk int:${Build.VERSION.SDK_INT} reuseVirtualDisplay:$reuseVirtualDisplay")
         FFI.init(this)
         HandlerThread("Service", Process.THREAD_PRIORITY_BACKGROUND).apply {
@@ -247,26 +246,7 @@ class MainService : Service() {
 
         createForegroundNotification()
     }
-	//测试重启
-	override fun onTaskRemoved(rootIntent: Intent?) {
-		super.onTaskRemoved(rootIntent)
-		
-		// 任务被移除时，通过 AlarmManager 重新启动服务
-		val restartIntent = Intent(this, MainService::class.java)
-		val pendingIntent = PendingIntent.getService(
-			this,
-			1,
-			restartIntent,
-			PendingIntent.FLAG_IMMUTABLE
-		)
-		
-		val alarmManager = getSystemService(Context.ALARM_SERVICE) as AlarmManager
-		alarmManager.setExactAndAllowWhileIdle(
-			AlarmManager.ELAPSED_REALTIME_WAKEUP,
-			SystemClock.elapsedRealtime() + 2000, // 2秒后重启
-			pendingIntent
-		)
-	}
+	
     override fun onDestroy() {
         checkMediaPermission()
         stopService(Intent(this, FloatingWindowService::class.java))
