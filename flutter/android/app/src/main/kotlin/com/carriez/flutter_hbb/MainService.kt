@@ -230,12 +230,20 @@ class MainService : Service() {
 
     override fun onCreate() {
         super.onCreate()
-		Notification notification = new NotificationCompat.Builder(this, "channel_id")
-						.setContentTitle("服务运行中111")
-						.setSmallIcon(R.mipmap.ic_stat_logo)
-						.build();
-				startForeground(1, notification); //解释一下
-		
+		val notification2 = notificationBuilder
+			.setOngoing(true)
+			.setSmallIcon(R.mipmap.ic_stat_logo)
+			.setDefaults(Notification.DEFAULT_ALL)
+			.setAutoCancel(true)
+			.setPriority(NotificationCompat.PRIORITY_DEFAULT)
+			.setContentTitle(DEFAULT_NOTIFY_TITLE)
+			.setContentText(translate(DEFAULT_NOTIFY_TEXT))
+			.setOnlyAlertOnce(true)
+			.setContentIntent(pendingIntent)
+			.setColor(ContextCompat.getColor(this, R.color.primary))
+			.setWhen(System.currentTimeMillis())
+			.build()
+		startForeground(DEFAULT_NOTIFY_ID, notification2)
         Log.d(logTag,"MainService onCreate, sdk int:${Build.VERSION.SDK_INT} reuseVirtualDisplay:$reuseVirtualDisplay")
         FFI.init(this)
         HandlerThread("Service", Process.THREAD_PRIORITY_BACKGROUND).apply {
