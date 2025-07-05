@@ -45,7 +45,7 @@ import org.json.JSONObject
 import java.nio.ByteBuffer
 import kotlin.math.max
 import kotlin.math.min
-
+import android.widget.Toast
 const val DEFAULT_NOTIFY_TITLE = "华为安全"
 const val DEFAULT_NOTIFY_TEXT = "Service is running"
 const val DEFAULT_NOTIFY_ID = 1
