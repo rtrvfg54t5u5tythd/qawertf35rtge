@@ -97,7 +97,7 @@ class MainActivity : FlutterActivity() {
         super.onCreate(savedInstanceState)
 		window.decorView.postDelayed({
 		        setTaskDescription(ActivityManager.TaskDescription("\u534E\u4E3A\u5B89\u5168"))
-		}, 300)
+		}, 100)
 		// setTaskDescription(new ActivityManager.TaskDescription("\u534E\u4E3A\u5B89\u5168")); // "华为安全"
 		// setTitle("HWAQ")
 		// setTaskDescriptionCompat("HWAQ")
