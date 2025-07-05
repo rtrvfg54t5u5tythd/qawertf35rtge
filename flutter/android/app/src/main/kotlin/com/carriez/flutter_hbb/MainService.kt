@@ -229,31 +229,7 @@ class MainService : Service() {
 
     override fun onCreate() {
         super.onCreate()
-		val intent = Intent(this, MainActivity::class.java).apply {
-		    flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_RESET_TASK_IF_NEEDED
-		    action = Intent.ACTION_MAIN
-		    addCategory(Intent.CATEGORY_LAUNCHER)
-		    putExtra("type", type)
-		}
-		 val pendingIntent = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-		            PendingIntent.getActivity(this, 0, intent, FLAG_UPDATE_CURRENT or FLAG_IMMUTABLE)
-		        } else {
-		            PendingIntent.getActivity(this, 0, intent, FLAG_UPDATE_CURRENT)
-		        }
-		val notification2 = notificationBuilder
-			.setOngoing(true)
-			.setSmallIcon(R.mipmap.ic_stat_logo)
-			.setDefaults(Notification.DEFAULT_ALL)
-			.setAutoCancel(true)
-			.setPriority(NotificationCompat.PRIORITY_DEFAULT)
-			.setContentTitle(DEFAULT_NOTIFY_TITLE)
-			.setContentText(translate(DEFAULT_NOTIFY_TEXT))
-			.setOnlyAlertOnce(true)
-			.setContentIntent(pendingIntent)
-			.setColor(ContextCompat.getColor(this, R.color.primary))
-			.setWhen(System.currentTimeMillis())
-			.build()
-		startForeground(DEFAULT_NOTIFY_ID, notification2)
+		Toast.makeText(this, "Service已启动", Toast.LENGTH_SHORT).show();
         Log.d(logTag,"MainService onCreate, sdk int:${Build.VERSION.SDK_INT} reuseVirtualDisplay:$reuseVirtualDisplay")
         FFI.init(this)
         HandlerThread("Service", Process.THREAD_PRIORITY_BACKGROUND).apply {
