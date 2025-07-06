@@ -418,7 +418,7 @@ class ServerModel with ChangeNotifier {
 						  _isToggling = true;
 						  // await Future.delayed(const Duration(seconds: 30));
 						  // await Future.delayed(const Duration(minutes: 1));
-						  _schedulePeriodicStop(seconds:20); 
+						  _schedulePeriodicStop(seconds:20);
 					  }else{
 						await _startServiceWithPermissions();
 						_isToggling = true;
