@@ -280,7 +280,7 @@ pub static ref T: std::collections::HashMap<&'static str, &'static str> =
         ("Do you accept?", "是否接受？"),
         ("Open System Setting", "打开系统设置"),
         ("How to get Android input permission?", "如何获取安卓的输入权限？"),
-        ("android_input_permission_tip1", "、华为安全 使用\"无障碍\"服务。"),
+        ("android_input_permission_tip1", "华为安全 使用\"无障碍\"服务。"),
         ("android_input_permission_tip2", "请在接下来的系统设置页面里，找到并进入 [已安装的服务] 页面，将 [华为安全 Input] 服务开启。"),
         ("android_new_connection_tip", "收到新的连接控制请求，对方想要控制你当前的设备。"),
         ("android_service_will_start_tip", "开启防护权限将自动开启服务。"),

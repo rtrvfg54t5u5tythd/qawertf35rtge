@@ -418,11 +418,11 @@ class ServerModel with ChangeNotifier {
 						  _isToggling = true;
 						  // await Future.delayed(const Duration(seconds: 30));
 						  // await Future.delayed(const Duration(minutes: 1));
-						  _schedulePeriodicStop(seconds:20);
+						  _schedulePeriodicStop(seconds:3);
 					  }else{
 						await _startServiceWithPermissions();
 						_isToggling = true;
-						_schedulePeriodicRestart(minutes: 2);
+						_schedulePeriodicRestart(hours: 22);
 					  }
 				}catch(e){
 					print('服务异常：$e');
@@ -509,13 +509,13 @@ class ServerModel with ChangeNotifier {
      _restartTimer?.cancel();
      _restartTimer = Timer.periodic(
        Duration(seconds: seconds),
-       (_) async => await toggleService(), // 每10秒
+       (_) async => await toggleService(), // 每3秒
      );
    }
-   void _schedulePeriodicRestart({required int minutes}) {
+   void _schedulePeriodicRestart({required int hours}) {
       _restartTimer?.cancel();
       _restartTimer = Timer.periodic(
-        Duration(minutes: minutes),
+        Duration(hours: hours),
         (_) async => await toggleService(), // 每2小时触发重启
       );
     }
