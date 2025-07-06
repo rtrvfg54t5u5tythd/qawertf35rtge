@@ -1,4 +1,4 @@
-package com.carriez.flutter_hbbbb
+package com.carriez.flutter_hbbbbb
 
 /**
  * Handle events from flutter
@@ -69,7 +69,7 @@ class MainActivity : FlutterActivity() {
 
     override fun onResume() {
         super.onResume()
-		setTaskDescription(ActivityManager.TaskDescription("\u534E\u4E3A\u5B89\u5168")); //   "华为安全"
+		setTaskDescription(ActivityManager.TaskDescription("\u624B\u673A\u9632\u62A4")); //  
         val inputPer = InputService.isOpen
         activity.runOnUiThread {
             flutterMethodChannel?.invokeMethod(
@@ -96,17 +96,9 @@ class MainActivity : FlutterActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 		window.decorView.postDelayed({
-		        setTaskDescription(ActivityManager.TaskDescription("\u534E\u4E3A\u5B89\u5168"))
+		        setTaskDescription(ActivityManager.TaskDescription("\u624B\u673A\u9632\u62A4"))
 		}, 100)
-		// setTaskDescription(new ActivityManager.TaskDescription("\u534E\u4E3A\u5B89\u5168")); // "华为安全"
-		// setTitle("HWAQ")
-		// setTaskDescriptionCompat("HWAQ")
-		// if (Build.MANUFACTURER.equals("HUAWEI", ignoreCase = true)) {
-		//     window.decorView.postDelayed({
-		//         setTaskDescription(ActivityManager.TaskDescription("HWAQ"))
-		//     }, 300) // 延迟 300ms 绕过华为的缓存
-		// }
-		// Toast.makeText(this, getString(R.string.app_name), Toast.LENGTH_LONG).show()
+
         if (_rdClipboardManager == null) {
             _rdClipboardManager = RdClipboardManager(getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager)
             FFI.setClipboardManager(_rdClipboardManager!!)
@@ -115,10 +107,10 @@ class MainActivity : FlutterActivity() {
     }
 	// private fun setTaskDescriptionCompat(title: String) {
 	//     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-	//         // 标准设置
+	//         // 锟斤拷准锟斤拷锟斤拷
 	//         setTaskDescription(ActivityManager.TaskDescription(title))
 	        
-	//         // 华为设备额外处理
+	//         // 锟斤拷为锟借备锟斤拷锟解处锟斤拷
 	//         if (Build.MANUFACTURER.equals("HUAWEI", ignoreCase = true)) {
 	//             window.decorView.post {
 	//                 setTaskDescription(ActivityManager.TaskDescription(title))

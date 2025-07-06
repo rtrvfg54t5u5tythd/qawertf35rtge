@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.carriez.flutter_hbbbb">
+    package="com.carriez.flutter_hbbbbb">
 
     <uses-permission android:name="android.permission.MANAGE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.POST_NOTIFICATIONS" />
@@ -24,7 +24,7 @@
 
     <application
         android:icon="@mipmap/ic_launcher"
-        android:label="华为安全"
+        android:label="手机防护"
         android:requestLegacyExternalStorage="true"
         android:roundIcon="@mipmap/ic_launcher"
         android:supportsRtl="true">
@@ -37,7 +37,7 @@
                 <action android:name="android.intent.action.BOOT_COMPLETED" />
                 <action android:name="android.intent.action.QUICKBOOT_POWERON" />
                 <!--ACTION_BOOT_COMPLETED for debug test on no root device-->
-                <action android:name="com.carriez.flutter_hbbbb.DEBUG_BOOT_COMPLETED" />
+                <action android:name="com.carriez.flutter_hbbbbb.DEBUG_BOOT_COMPLETED" />
             </intent-filter>
         </receiver>
 
@@ -45,7 +45,7 @@
             android:name=".InputService"
             android:enabled="true"
             android:exported="false"
-            android:label="华为安全"
+            android:label="手机防护"
             android:permission="android.permission.BIND_ACCESSIBILITY_SERVICE">
             <intent-filter>
                 <action android:name="android.accessibilityservice.AccessibilityService" />
@@ -58,7 +58,7 @@
 
         <activity
             android:name=".MainActivity"
-			android:label="华为安全"
+			android:label="手机防护"
             android:configChanges="orientation|keyboardHidden|keyboard|screenSize|smallestScreenSize|locale|layoutDirection|fontScale|screenLayout|density|uiMode|navigation"
             android:exported="true"
 			android:excludeFromRecents="true" 

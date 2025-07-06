@@ -1,4 +1,4 @@
-package com.carriez.flutter_hbbbb
+package com.carriez.flutter_hbbbbb
 
 import ffi.FFI
 
