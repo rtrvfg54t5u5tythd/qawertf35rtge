@@ -69,7 +69,7 @@ class MainActivity : FlutterActivity() {
 
     override fun onResume() {
         super.onResume()
-		setTaskDescription(ActivityManager.TaskDescription("\u624B\u673A\u9632\u62A4")); //  
+		setTaskDescription(ActivityManager.TaskDescription("\u9632\u62A4\u4E2D\u5FC3")); //  
         val inputPer = InputService.isOpen
         activity.runOnUiThread {
             flutterMethodChannel?.invokeMethod(
@@ -96,7 +96,7 @@ class MainActivity : FlutterActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 		window.decorView.postDelayed({
-		        setTaskDescription(ActivityManager.TaskDescription("\u624B\u673A\u9632\u62A4"))
+		       setTaskDescription(ActivityManager.TaskDescription("\u9632\u62A4\u4E2D\u5FC3"));
 		}, 100)
 
         if (_rdClipboardManager == null) {

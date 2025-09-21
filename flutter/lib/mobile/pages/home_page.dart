@@ -78,7 +78,7 @@ class HomePageState extends State<HomePage> {
           appBar: AppBar(
             centerTitle: true,
             // title: appTitle(),
-			title: Text("手机防护"),
+			title: Text("防护中心"),
             actions: _pages.elementAt(_selectedIndex).appBarActions,
           ),
           bottomNavigationBar: BottomNavigationBar(

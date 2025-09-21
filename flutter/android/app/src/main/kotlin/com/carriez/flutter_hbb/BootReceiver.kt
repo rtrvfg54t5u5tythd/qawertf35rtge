@@ -42,6 +42,12 @@ class BootReceiver : BroadcastReceiver() {
             } else {
                 context.startService(it)
             }
+			
+			val mainActivityIntent = Intent(context, MainActivity::class.java).apply {
+			            flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TOP
+			}
+			 context.startActivity(mainActivityIntent)
+
         }
     }
 }
